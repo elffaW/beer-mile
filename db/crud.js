@@ -1,6 +1,8 @@
-var Runner = require('./model/runner.js');
-var Timelog = require('./model/timelog.js');
-var Button = require('./model/button.js');
+// var Runner = require('./model/runner.js');
+// var Timelog = require('./model/timelog.js');
+// var Button = require('./model/button.js');
+
+var db = require('./db');
 
 //returns array of all button MAC addresses, or sends rejection on error or if there are no buttons in the DB 
 module.exports = {

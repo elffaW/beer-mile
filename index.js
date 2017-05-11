@@ -1,8 +1,16 @@
 //includes / requires
 var dash_button = require('node-dash-button');
 
-// import * as db from 'db/crud.js';
-var db = require('./db/crud.js');
+// import * as crud from 'db/crud.js';
+var crud = require('./db/crud.js');
+var db = require('./db/db.js');
+
+db.dbConnection.sync({force:false}).
+	then(function() {
+		console.log('Database created');
+	
+		//crud.loadData();
+	});
 
 var DASH_MAC_ADDRESSES = [];	//get list of button MACs from database (pre-populated)
 
@@ -10,7 +18,7 @@ var DASH_MAC_ADDRESSES = [];	//get list of button MACs from database (pre-popula
 DASH_MAC_ADDRESSES.push("68:54:fd:27:a0:ba"); //temp (MAC of poof button)
 
 //get all the button MAC addresses
-db.getAllButtonMACs().
+crud.getAllButtonMACs().
 	then(function(allMACs) {
 		DASH_MAC_ADDRESSES = allMACs;
 	}).catch(function(err) {
@@ -22,5 +30,5 @@ var dash = dash_button(DASH_MAC_ADDRESSES);
 //listen for button presses from any of the MACs in the DB
 dash.on("detected", function (dash_mac){
     //insert a new timestamp into the DB
-    db.insertTimestamp(dash_mac);
+    crud.insertTimestamp(dash_mac);
 });

@@ -1,9 +1,9 @@
 var Sequelize = require('sequelize');
 
-module.exports = function(sequelize) {
+module.exports = function(sequelize, DataTypes) {
 	var Button = sequelize.define('button', {
-		name: {
-			mac: Sequelize.STRING
+		mac: {
+			type: DataTypes.STRING
 		}
 	});
 

@@ -1,9 +1,9 @@
 var Sequelize = require('sequelize');
 
-module.exports = function(sequelize) {
+module.exports = function(sequelize, DataTypes) {
 	var Timelog = sequelize.define('timelog', {
 		timestamp: {
-			type: Sequelize.DATETIME
+			type: DataTypes.DATE
 		}
 	});
 

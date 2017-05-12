@@ -13,9 +13,9 @@ var dbConnection = new Sequelize('racetimes', null, null, {
 
 var db = {};
 
-db.runner = dbConnection.import('./model/Runner.js');
-db.timelog = dbConnection.import('./model/Timelog.js');
-db.button = dbConnection.import('./model/Button.js');
+db.runner = dbConnection.import('./model/runner.js');
+db.timelog = dbConnection.import('./model/timelog.js');
+db.button = dbConnection.import('./model/button.js');
 
 // setup relationships (probably should happen elsewhere)
 db.runner.belongsTo(db.button, { foreignKey: 'button_id' });

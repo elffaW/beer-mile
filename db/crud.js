@@ -26,12 +26,14 @@ module.exports = {
 
 
 //takes a button MAC address, and inserts a new timestamp for that button
-	insertTimestamp: function(mac) {
-		db.button.findOne({	//find the button that was pressed
+	insertTimestamp: function(mac, timestamp) {
+		Button.findOne({	//find the button that was pressed
 			where: { mac: mac }
 		}).
 		then(function(button) {
-			db.timelog.create().	//create a new button, and...
+			var newTime = {};
+			newTime.timestamp = timestamp;
+			Timelog.create(newTime).	//create a new button, and...
 			then(function(timelog) {
 				timelog.setButton(button);	//link it to the button
 			}).catch(function(err) {

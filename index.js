@@ -30,5 +30,5 @@ var dash = dash_button(DASH_MAC_ADDRESSES);
 //listen for button presses from any of the MACs in the DB
 dash.on("detected", function (dash_mac){
     //insert a new timestamp into the DB
-    crud.insertTimestamp(dash_mac);
+    crud.insertTimestamp(dash_mac, new Date());
 });

@@ -24,21 +24,23 @@ db.dbConnection.sync({force:false}).
 					then(function(allMACs) {
 						console.log(`Got button list from DB [${allMACs}]`);
 						DASH_MAC_ADDRESSES = allMACs;
+
+						var dash = dash_button(DASH_MAC_ADDRESSES);
+
+						console.log(`Listening for presses from these MACs: [${DASH_MAC_ADDRESSES}]`);
+						//listen for button presses from any of the MACs in the DB
+						dash.on("detected", function (dash_mac){
+						    //insert a new timestamp into the DB
+						    console.log(`Detected button with MAC [${dash_mac}]`);
+						    console.log(`Inserting timestamp into DB [${new Date()}]`);
+						    crud.insertTimestamp(dash_mac, new Date());
+						});
+
 					}).catch(function(err) {
 						console.error(err);
 					});
 
-				// var dash = dash_button(DASH_MAC_ADDRESSES);
-
-				console.log(`Listening for presses from these MACs: [${DASH_MAC_ADDRESSES}]`);
-				// //listen for button presses from any of the MACs in the DB
-				// dash.on("detected", function (dash_mac){
-				//     //insert a new timestamp into the DB
-				//     console.log(`Detected button with MAC [${dash_mac}]`);
-				//     console.log(`Inserting timestamp into DB [${new Date()}]`);
-				//     crud.insertTimestamp(dash_mac, new Date());
-				// });
-
+				
 			}).
 			catch(function(err) {
 				console.error(`Data load error: ${err}`);

@@ -13,20 +13,20 @@ var buttonMACarray = {
     'SKYN' : '68:54:fd:51:f5:31'
 };
 
-var runnerArray = {
-    'MATT' : 'MILKBONE',
-    'MIKE' : 'VITAMIN_WATER',
-    'TC' : 'BANANA',
-    'KIM' : 'AMAZON_BASICS',
-    'ANDY' : 'PERKY_JERKY',
-    'MEGHAN' : 'BURTS_BEES',
-    'LIZ' : 'ANGEL_SOFT',
-    'PETER' : 'QUILTED_NORTHERN',
-    'JR' : 'CHARMIN',
-    'SHANLEY' : 'PLAYTEX',
-    'JAY' : 'PASSION',
-    'NORA' : 'SKYN',
-};
+var runnerArray = [
+    'MATT',
+    'MIKE',
+    'TC',
+    'KIM',
+    'ANDY',
+    'MEGHAN',
+    'LIZ',
+    'PETER',
+    'JR',
+    'SHANLEY',
+    'JAY',
+    'NORA',
+];
 
 module.exports.buttonMACarray = buttonMACarray;
 module.exports.runnerArray = runnerArray;

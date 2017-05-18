@@ -24,8 +24,7 @@ var Buttons = connection.define('button', {
 });
 
 var Runners = connection.define('runner',{
-  runnerName:{type: Sequelize.STRING},
-  runnerButton:{type: Sequelize.STRING}
+  runnerName:{type: Sequelize.STRING}
 });
 
 var Times = connection.define('time',{
@@ -46,8 +45,7 @@ connection.sync({force:true}).then(function () {
 connection.sync({force:true}).then(function () {
   for (var i in runnerArray){
     Runners.create({
-      runnerName: i,
-      runnerButton: runnerArray[i]
+      runnerName: runnerArray[i]
     })
   }
 });

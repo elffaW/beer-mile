@@ -4,6 +4,9 @@ module.exports = function(sequelize, DataTypes) {
 	var Button = sequelize.define('button', {
 		mac: {
 			type: DataTypes.STRING
+		},
+		name: {
+			type: DataTypes.STRING
 		}
 	});
 

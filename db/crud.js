@@ -115,14 +115,14 @@ module.exports = {
 			}
 			Promise.all(buttonPromises).
 				then(function(buttonsDone) {
-					console.debug(`Buttons loaded: ${buttonsDone}`);
+					console.log(`Buttons loaded: ${buttonsDone}`);
 					var runnerPromises = [];
 					for(var r in THE_RUNNERS) {
 						runnerPromises.push(createRunner(THE_RUNNERS[r]));
 					}
 					Promise.all(runnerPromises).
 						then(function(runnersDone) {
-							console.debug(`Runners loaded: ${runnersDone}`);
+							console.log(`Runners loaded: ${runnersDone}`);
 							resolve('Buttons and Runners loaded');
 						}).
 						catch(function(err) {
@@ -141,7 +141,7 @@ module.exports = {
 		return new Promise(function(resolve,reject) {
 			db.button.create(button).
 				then(function(created) {
-					console.debug(`Button added: [${button.name}]`);
+					console.log(`Button added: [${button.name}]`);
 					resolve(created);
 				}).
 				catch(function(err) {
@@ -155,7 +155,7 @@ module.exports = {
 		return new Promise(function(resolve,reject) {
 			db.runner.create(runner).
 				then(function(created) {
-					console.debug(`Button added: [${runner.name}]`);
+					console.log(`Button added: [${runner.name}]`);
 					resolve(created);
 				}).
 				catch(function(err) {

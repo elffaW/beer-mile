@@ -28,20 +28,20 @@ db.dbConnection.sync({force:false}).
 						console.error(err);
 					});
 
-				var dash = dash_button(DASH_MAC_ADDRESSES);
+				// var dash = dash_button(DASH_MAC_ADDRESSES);
 
 				console.log(`Listening for presses from these MACs: [${DASH_MAC_ADDRESSES}]`);
-				//listen for button presses from any of the MACs in the DB
-				dash.on("detected", function (dash_mac){
-				    //insert a new timestamp into the DB
-				    console.log(`Detected button with MAC [${dash_mac}]`);
-				    console.log(`Inserting timestamp into DB [${new Date()}]`);
-				    crud.insertTimestamp(dash_mac, new Date());
-				});
-				
+				// //listen for button presses from any of the MACs in the DB
+				// dash.on("detected", function (dash_mac){
+				//     //insert a new timestamp into the DB
+				//     console.log(`Detected button with MAC [${dash_mac}]`);
+				//     console.log(`Inserting timestamp into DB [${new Date()}]`);
+				//     crud.insertTimestamp(dash_mac, new Date());
+				// });
+
 			}).
 			catch(function(err) {
-				console.errog(`Data load error: ${err}`);
+				console.error(`Data load error: ${err}`);
 			});
 	});
 

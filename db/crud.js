@@ -4,7 +4,7 @@
 
 var db = require('./db');
 
-var THE_BUTTONS = [
+const THE_BUTTONS = [
 	{
 		name: 'MILKBONE',
 		mac: '40:b4:cd:bc:63:ca'
@@ -47,7 +47,7 @@ var THE_BUTTONS = [
 	}
 ];
 
-var THE_RUNNERS = [
+const THE_RUNNERS = [
 	{ name: 'MATT' },
 	{ name: 'MIKE' },
 	{ name: 'TC' },
@@ -108,17 +108,20 @@ module.exports = {
 
 //loads the initial button data
 	loadData: () => {
+		console.log('loading data');
 		return new Promise(function(resolve, reject) {
 			var buttonPromises = [];
 			for(var b in THE_BUTTONS) {
-				buttonPromises.push(createButton(THE_BUTTONS[b]));
+				console.log(`Found button to create: ${THE_BUTTONS[b]}`);
+				buttonPromises.push(db.button.create(THE_BUTTONS[b]));
 			}
 			Promise.all(buttonPromises).
 				then(function(buttonsDone) {
 					console.log(`Buttons loaded: ${buttonsDone}`);
 					var runnerPromises = [];
 					for(var r in THE_RUNNERS) {
-						runnerPromises.push(createRunner(THE_RUNNERS[r]));
+						console.log(`Found runner to create: ${THE_RUNNERS[r]}`);
+						runnerPromises.push(db.runner.create(THE_RUNNERS[r]));
 					}
 					Promise.all(runnerPromises).
 						then(function(runnersDone) {
@@ -132,34 +135,6 @@ module.exports = {
 				}).
 				catch(function(err) {
 					console.error(`Error loading buttons: ${err}`);
-					reject(err);
-				});
-		});
-	},
-
-	createButton: (button) => {
-		return new Promise(function(resolve,reject) {
-			db.button.create(button).
-				then(function(created) {
-					console.log(`Button added: [${button.name}]`);
-					resolve(created);
-				}).
-				catch(function(err) {
-					console.error(err);
-					reject(err);
-				});
-		});
-	},
-
-	createRunner: (runner) => {
-		return new Promise(function(resolve,reject) {
-			db.runner.create(runner).
-				then(function(created) {
-					console.log(`Button added: [${runner.name}]`);
-					resolve(created);
-				}).
-				catch(function(err) {
-					console.error(err);
 					reject(err);
 				});
 		});

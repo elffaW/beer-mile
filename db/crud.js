@@ -3,6 +3,13 @@
 // var Button = require('./model/button.js');
 
 var db = require('./db');
+var fs = require('fs');
+
+/* load a JSON file like so
+ *	var theFile = './src/db/data/file.json';
+ *	var theObj = JSON.parse(fs.readFileSync(theFile, 'utf8'));
+ *	db.theObjType.bulkCreate( theObj ).then(...).catch(...);
+ */
 
 const THE_BUTTONS = [
 	{

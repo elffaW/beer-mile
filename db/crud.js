@@ -1,7 +1,3 @@
-// var Runner = require('./model/runner.js');
-// var Timelog = require('./model/timelog.js');
-// var Button = require('./model/button.js');
-
 var db = require('./db');
 var fs = require('fs');
 
@@ -10,64 +6,6 @@ var fs = require('fs');
  *	var theObj = JSON.parse(fs.readFileSync(theFile, 'utf8'));
  *	db.theObjType.bulkCreate( theObj ).then(...).catch(...);
  */
-
-const THE_BUTTONS = [
-	{
-		name: 'MILKBONE',
-		mac: '40:b4:cd:bc:63:ca'
-	}, {
-		name: 'VITAMIN WATER',
-		mac: '68:37:e9:b7:ed:ef'
-	}, {
-		name: 'BANANA',
-		mac: '44:65:0d:25:bc:e3'
-	}, {
-		name: 'AMAZON BASICS',
-		mac: '68:37:e9:ea:da:f8'
-	}, {
-		name: 'PERKY JERKY',
-		mac: '34:d2:70:c5:3a:bf'
-	}, {
-		name: 'BURTS BEES',
-		mac: '40:b4:cd:72:c9:1a'
-	}, {
-		name: 'ANGEL SOFT',
-		mac: '68:54:fd:38:e2:c2'
-	}, {
-		name: 'QUILTED NORTHERN',
-		mac: '40:b4:cd:1c:47:1e'
-	}, {
-		name: 'CHARMIN',
-		mac: '88:71:e5:f6:13:79'
-	}, {
-		name: 'PLAYTEX',
-		mac: '68:37:e9:51:0f:8f'
-	}, {
-		name: 'PASSION',
-		mac: '68:54:fd:54:4a:6c'
-	}, {
-		name: 'SKYN',
-		mac: '68:54:fd:51:f5:31'
-	}, {
-		name: 'POOF',
-		mac: '68:54:fd:27:a0:ba'
-	}
-];
-
-const THE_RUNNERS = [
-	{ name: 'MATT' },
-	{ name: 'MIKE' },
-	{ name: 'TC' },
-	{ name: 'KIM' },
-	{ name: 'ANDY' },
-	{ name: 'MEGHAN' },
-	{ name: 'LIZ' },
-	{ name: 'PETER' },
-	{ name: 'JR' },
-	{ name: 'SHANLEY' },
-	{ name: 'JAY' },
-	{ name: 'NORA' },
-];
 
 //returns array of all button MAC addresses, or sends rejection on error or if there are no buttons in the DB 
 module.exports = {
@@ -117,20 +55,26 @@ module.exports = {
 	loadData: () => {
 		console.log('loading data');
 		return new Promise(function(resolve, reject) {
-			var buttonPromises = [];
-			for(var b in THE_BUTTONS) {
-				console.log(`Found button to create: ${THE_BUTTONS[b]}`);
-				buttonPromises.push(db.button.create(THE_BUTTONS[b]));
-			}
-			Promise.all(buttonPromises).
+// 			var buttonPromises = [];
+// 			for(var b in THE_BUTTONS) {
+// 				console.log(`Found button to create: ${THE_BUTTONS[b]}`);
+// 				buttonPromises.push(db.button.create(THE_BUTTONS[b]));
+// 			}
+// 			Promise.all(buttonPromises).
+			var buttonFile = './src/db/data/button.json';
+			var buttonObj = JSON.parse(fs.readFileSync(buttonFile, 'utf8'));
+			db.button.bulkCreate( buttonObj ).
 				then(function(buttonsDone) {
 					console.log(`Buttons loaded: ${buttonsDone}`);
-					var runnerPromises = [];
-					for(var r in THE_RUNNERS) {
-						console.log(`Found runner to create: ${THE_RUNNERS[r]}`);
-						runnerPromises.push(db.runner.create(THE_RUNNERS[r]));
-					}
-					Promise.all(runnerPromises).
+// 					var runnerPromises = [];
+// 					for(var r in THE_RUNNERS) {
+// 						console.log(`Found runner to create: ${THE_RUNNERS[r]}`);
+// 						runnerPromises.push(db.runner.create(THE_RUNNERS[r]));
+// 					}
+// 					Promise.all(runnerPromises).
+					var runnerFile = './src/db/data/runner.json';
+					var runnerObj = JSON.parse(fs.readFileSync(runnerFile, 'utf8'));
+					db.button.bulkCreate( buttonObj ).
 						then(function(runnersDone) {
 							console.log(`Runners loaded: ${runnersDone}`);
 							resolve('Buttons and Runners loaded');

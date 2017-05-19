@@ -2,7 +2,7 @@ var db = require('./db');
 var fs = require('fs');
 
 /* load a JSON file like so
- *	var theFile = './src/db/data/file.json';
+ *	var theFile = './db/data/file.json';
  *	var theObj = JSON.parse(fs.readFileSync(theFile, 'utf8'));
  *	db.theObjType.bulkCreate( theObj ).then(...).catch(...);
  */
@@ -61,22 +61,22 @@ module.exports = {
 // 				buttonPromises.push(db.button.create(THE_BUTTONS[b]));
 // 			}
 // 			Promise.all(buttonPromises).
-			var buttonFile = './src/db/data/button.json';
+			var buttonFile = './db/data/button.json';
 			var buttonObj = JSON.parse(fs.readFileSync(buttonFile, 'utf8'));
 			db.button.bulkCreate( buttonObj ).
 				then(function(buttonsDone) {
-					console.log(`Buttons loaded: ${buttonsDone}`);
+					console.log(`Buttons loaded: ${JSON.stringify(buttonsDone,null,2)}`);
 // 					var runnerPromises = [];
 // 					for(var r in THE_RUNNERS) {
 // 						console.log(`Found runner to create: ${THE_RUNNERS[r]}`);
 // 						runnerPromises.push(db.runner.create(THE_RUNNERS[r]));
 // 					}
 // 					Promise.all(runnerPromises).
-					var runnerFile = './src/db/data/runner.json';
+					var runnerFile = './db/data/runner.json';
 					var runnerObj = JSON.parse(fs.readFileSync(runnerFile, 'utf8'));
-					db.button.bulkCreate( buttonObj ).
+					db.runner.bulkCreate( runnerObj ).
 						then(function(runnersDone) {
-							console.log(`Runners loaded: ${runnersDone}`);
+							console.log(`Runners loaded: ${JSON.stringify(runnersDone,null,2)}`);
 							resolve('Buttons and Runners loaded');
 						}).
 						catch(function(err) {

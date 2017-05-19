@@ -20,7 +20,8 @@ a fun helper script i found online that lets me listen for network requests from
 ### How to use this thing
 - Clone it
 - `npm install`
-- ...?
+- `npm run resetdb` -- creates DB and inserts runners and buttons
+- `npm start` -- executes `node index.js` which gets buttons from DB and handles presses
 
 ### TODO (so much...)
 - figure out how to run all this crap (first: how do we setup the DB?)

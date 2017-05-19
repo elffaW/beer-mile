@@ -36,7 +36,22 @@
 		"name": "SKYN",
 		"mac": "68:54:fd:51:f5:31"
 	}, {
-		"name": "POOF",
+		"name": "poof",
 		"mac": "68:54:fd:27:a0:ba"
+	}, {
+		"name": "milk baby",
+		"mac": "44:65:0d:8f:5e:29"
+	}, {
+		"name": "dang",
+		"mac": "40:b4:cd:be:69:8a"
+	}, {
+		"name": "neat",
+		"mac": "ac:63:be:72:90:fd"
+	}, {
+		"name": "Supergoop!",
+		"mac": "68:54:fd:3d:da:75"
+	}, {
+		"name": "bai",
+		"mac": "68:37:e9:cc:a3:80"
 	}
 ]

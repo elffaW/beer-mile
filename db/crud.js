@@ -37,7 +37,7 @@ module.exports = {
 				where: { mac: mac }
 			}).
 			then(function(button) {
-				console.log(`Got the button... ${JSON.stringify(button,null,4)}`);
+				console.log(`Got the button... ${button.name}`);
 				var newTime = {};
 				newTime.timestamp = timestamp;
 				db.timelog.create(newTime).	//create a new button, and...

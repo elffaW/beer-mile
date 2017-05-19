@@ -8,7 +8,8 @@ var Sequelize = require('sequelize');
 
 var dbConnection = new Sequelize('racetimes', null, null, {
   dialect: 'sqlite',
-  storage: 'db/racetimes.sqlite'
+  storage: 'db/racetimes.sqlite',
+  logging: false	//false to turn off SQL logging (default true)
 });
 
 var db = {};

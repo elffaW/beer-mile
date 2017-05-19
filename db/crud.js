@@ -37,11 +37,19 @@ module.exports = {
 				where: { mac: mac }
 			}).
 			then(function(button) {
+				console.log(`Got the button... ${JSON.stringify(button,null,4)}`);
 				var newTime = {};
 				newTime.timestamp = timestamp;
-				Timelog.create(newTime).	//create a new button, and...
+				db.timelog.create(newTime).	//create a new button, and...
 				then(function(timelog) {
-					timelog.setButton(button);	//link it to the button
+					timelog.setButton(button).	//link it to the button
+						then(function(done) {
+							console.log('related button to timelog');
+							resolve(done);
+						}).
+						catch(function(err) {
+							reject(err);
+						});
 				}).catch(function(err) {
 					reject(err);
 				});
@@ -55,23 +63,11 @@ module.exports = {
 	loadData: () => {
 		console.log('loading data');
 		return new Promise(function(resolve, reject) {
-// 			var buttonPromises = [];
-// 			for(var b in THE_BUTTONS) {
-// 				console.log(`Found button to create: ${THE_BUTTONS[b]}`);
-// 				buttonPromises.push(db.button.create(THE_BUTTONS[b]));
-// 			}
-// 			Promise.all(buttonPromises).
 			var buttonFile = './db/data/button.json';
 			var buttonObj = JSON.parse(fs.readFileSync(buttonFile, 'utf8'));
 			db.button.bulkCreate( buttonObj ).
 				then(function(buttonsDone) {
 					console.log(`Buttons loaded: ${JSON.stringify(buttonsDone,null,2)}`);
-// 					var runnerPromises = [];
-// 					for(var r in THE_RUNNERS) {
-// 						console.log(`Found runner to create: ${THE_RUNNERS[r]}`);
-// 						runnerPromises.push(db.runner.create(THE_RUNNERS[r]));
-// 					}
-// 					Promise.all(runnerPromises).
 					var runnerFile = './db/data/runner.json';
 					var runnerObj = JSON.parse(fs.readFileSync(runnerFile, 'utf8'));
 					db.runner.bulkCreate( runnerObj ).

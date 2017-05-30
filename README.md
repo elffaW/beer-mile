@@ -25,8 +25,7 @@ shell of button listener - idea is it gets all the buttons and then listen for p
 - `npm run resetdb` -- creates DB and inserts runners and buttons
 - `npm start` -- executes `node index.js` which gets buttons from DB and handles presses
 
-### TODO (so much...)
-- (on pi) set up auto-start of server on boot for easy setup on race day (pm2?)
+### TODO
 - frontend (realtime display of times? add user? and associate user to button?)
   - Set up skeleton project for front end under web/ directory
   - Set up webpack as builder
@@ -37,3 +36,10 @@ shell of button listener - idea is it gets all the buttons and then listen for p
 - seems to handle multiple presses from different buttons in succession / at once (tested with 6)
   - might lag a little on some of them (one time pressing 6 at once, 2 had 1sec delay)
 - single button can't be pressed more than once every 7-10 seconds or so
+
+### Raspberry Pi Setup
+Assuming other dependencies are already installed, setup pm2 to manage the app (restart on crash/reboot)
+- `npm install pm2 -g` -- installs pm2 globally
+- `sudo pm2 start npm -- start` -- starts app and shows status
+- `sudo pm2 startup` -- sets up startup script to run on reboot
+- `sudo pm2 save` -- saves config

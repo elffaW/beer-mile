@@ -1,9 +1,42 @@
 //includes / requires
-var dash_button = require('node-dash-button');
+import express from 'express';
+import bodyParser from 'body-parser';
 
-// import * as crud from 'db/crud.js';
-var crud = require('./db/crud.js');
-var db = require('./db/db.js');
+let dash_button = require('node-dash-button');
+const socketio = require('socket.io');
+
+import * as crud from 'db/crud.js';
+// let crud = require('./db/crud.js');
+import db from './db/db.js';
+
+let http = require('http'),
+    app = express();
+
+const server = http.Server(app);
+
+app.use(express.static('./build/client'));
+app.use(bodyParser.urlencoded({extended: false}));
+
+server.listen(80);
+/* to switch UID in case of root/sudo requirement for port 80 (inside of server.listen callback)
+server.listen(80, err => {
+	if(err) {
+		console.error(err);
+		return;
+	}
+	
+	let uid = parseInt(process.env.SUDO_UID);
+	if(uid) {
+		process.setuid(uid);
+		console.debug('Server running as UID: ' + process.getuid());
+	}
+	
+	console.log('Server running: navigate to http://localhost');
+});
+*/
+
+let io = socketio.listen(server);
+
 
 db.dbConnection.sync({force:false}).
 	then(function() {

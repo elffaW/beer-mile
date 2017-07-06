@@ -5,7 +5,17 @@ Idea is to set up a timing mechanism for a race. Uses dash buttons (one per runn
 
 ### Code Structure
 Basically, we've got a few things:
+*UPDATES*
 
+**app/**
+- contains all the frontend code
+
+**build/**
+- contains index.html and is also where the webpack-bundled site will go
+- after build, will contain a client/ and a server/ folder for separation
+- webpack will also put any image or css or other resources here
+
+*old/outdated?*
 - *index.js*
 shell of button listener - idea is it gets all the buttons and then listen for presses from any of them. upon a press, it inserts a timestamp for the button that was pressed.
 

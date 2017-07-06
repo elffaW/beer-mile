@@ -1,6 +1,7 @@
 //includes / requires
 let express = require('express');
 let bodyParser = require('body-parser');
+let path = require('path');
 
 let dash_button = require('node-dash-button');
 const socketio = require('socket.io');
@@ -10,17 +11,17 @@ let crud = require('./db/crud.js');
 let db = require('./db/db.js');
 
 let http = require('http'),
-    app = express();
+	app = express();
 
-const server = http.createServer( (req, res) => {
-	res.end();
-});
+// const server = http.createServer( (req, res) => {
+// 	res.end();
+// });
 
 app.use(express.static('./build/client'));
 app.use(bodyParser.urlencoded({extended: false}));
 
 //basic listen statement, without callback
-server.listen(8181, err => {
+const server = app.listen(8181, err => {
 	if(err) {
 		return console.error(err);
 	}
@@ -29,7 +30,7 @@ server.listen(8181, err => {
 });
 
 /*// listen but with code to switch UID in case of root/sudo requirement for port 80 (inside of server.listen callback)
-server.listen(80, err => {
+app.listen(80, err => {
 	if(err) {
 		console.error(err);
 		return;
@@ -47,11 +48,17 @@ server.listen(80, err => {
 
 let io = socketio.listen(server);
 
+io.on('connection', function(socket){
+	console.log('a user connected');
+	socket.on('update', (msg) => {
+		console.log('received message: ' + msg);
+		io.emit('test', 'new message');
+	});
+});
 
-
-app.get('*', function(req, res) {
+app.get('/', function(req, res) {
 	console.log('heard a thing');
-  res.sendFile(path.resolve(__dirname, 'build/index.html'));
+	res.sendFile(path.resolve(__dirname, 'build/index.html'));
 });
 
 /************************ LISTEN FOR BUTTON PRESSES ************************/

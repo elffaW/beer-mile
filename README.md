@@ -4,24 +4,22 @@ Idea is to set up a timing mechanism for a race. Uses dash buttons (one per runn
 
 
 ### Code Structure
-Basically, we've got a few things:
-*UPDATES*
 
-**app/**
-- contains all the frontend code
+- **app/**
+  - contains all the frontend code
 
-**build/**
-- contains index.html and is also where the webpack-bundled site will go
-- after build, will contain a client/ and a server/ folder for separation
-- webpack will also put any image or css or other resources here
+- **build/**
+  - index.html 
+  - after build, will contain a client/ and a server/ folder for separation
+  - webpack will also put any image or css or other resources here
 
-*old/outdated?*
-- *index.js*
-shell of button listener - idea is it gets all the buttons and then listen for presses from any of them. upon a press, it inserts a timestamp for the button that was pressed.
+- *server.js*
+  - node/express server and button listener
+  - serves up the front end, and gets all the buttons from DB so it can listen for presses from any of them. upon a press, it inserts a timestamp for the button that was pressed
 
 - **db**
   - db.js is meant to setup the DB, and then take the models we setup in the ./models dir and setup relationships
-  - crud.js has helper database functions
+  - crud.js has any database create/read/update/delete functions
 
 - **db/models**
   - contains the database table models
@@ -29,18 +27,21 @@ shell of button listener - idea is it gets all the buttons and then listen for p
 - **scripts**
   - a helper script i found online to listen for network requests from MACs as they happen on Windows (run it in powershell, enter a filename at the prompt and it will log MACs to that file as you press the buttons)
 
-### How to use this thing
+### How To Use
 - Clone it
 - `npm install`
 - `npm run resetdb` -- creates DB and inserts runners and buttons
-- `npm start` -- executes `node index.js` which gets buttons from DB and handles presses
+- `npm run build-all` -- cleans the build/client and build/server dirs and rebuilds front and backend
+- `npm start` -- executes `node server` which serves frontend and handles buttons
 
-### TODO
+### TODO (https://github.com/elffaW/beer-mile/projects/1)
 - frontend (realtime display of times? add user? and associate user to button?)
-  - Set up skeleton project for front end under web/ directory
-  - Set up webpack as builder
-  - Update dependencies for front end stuff
-  - Update server to do more than just listen for button presses (i.e., make it an actual app server)
+  - [x] Set up skeleton project for front end under app/ directory
+  - [x] Set up webpack as builder
+  - [ ] Update dependencies for front end stuff (in progress)
+  - [ ] Update server to do more than just listen for button presses (i.e., make it an actual app server) (in progress)
+  - [ ] static runner-to-button association (on data load)
+  - [ ] dynamic runner-to-button association (i.e., via frontend)
 
 ### Button Testing Status
 - seems to handle multiple presses from different buttons in succession / at once (tested with 6)

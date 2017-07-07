@@ -22,7 +22,7 @@ export class BeerMile extends React.Component {
 		console.log(this.state.socketMessage);
 		return (
 			<div>
-				<h2>Hello World</h2>
+				<h2>TC LOSES</h2>
 			</div>
 		);
 	}

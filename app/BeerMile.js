@@ -7,7 +7,7 @@ export class BeerMile extends React.Component {
 		console.log('Hello');
 		return (
 			<div>
-				<p>HERROOO World</p>
+				<p>TC LOSES</p>
 			</div>
 		);
 	}

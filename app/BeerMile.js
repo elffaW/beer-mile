@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { MuiThemeProvider } from 'material-ui/styles';
 
 // import UI elements
-import Button from 'material-ui/Button';
+import { Button, Progress, Grid, Segment, Header, Icon } from 'semantic-ui-react';
 
 const io = require('socket.io-client');
 const socket = io();
 
-// import style from './styles/style.css';
+import 'semantic-ui-css/semantic.min.css';
 import './styles/style.css';
-// import './styles/fonts';
-// import 'grommet/scss/vanilla/index';
 
 export class BeerMile extends React.Component {
 	constructor() {
@@ -27,11 +24,79 @@ export class BeerMile extends React.Component {
 	render() {
 		console.log(this.state.socketMessage);
 		return (
-			<MuiThemeProvider>
-				<Button>
-					<i class="material-icons">&#xE87C;</i>TC LOSES
-				</Button>
-			</MuiThemeProvider>
+			<div>
+				<Header inverted textAlign="center" as='h2' icon>
+					<Icon name='beer' />
+					BEER MILE 2017
+					<Header.Subheader>
+						Free t-shirts provided by TC. Who LOSES.
+					</Header.Subheader>
+				</Header>
+				<Segment>
+					<Grid columns={2} >
+						<Grid.Row>
+							<Grid.Column>
+								<Progress percent={20} active progress inverted color='red'>
+									TC LOSES
+								</Progress>
+							</Grid.Column>
+							<Grid.Column>
+								<Progress percent={45} active progress inverted color='orange'>
+									TC LOSES
+								</Progress>
+							</Grid.Column>
+						</Grid.Row>
+						<Grid.Row>
+							<Grid.Column>
+								<Progress percent={60} active progress inverted color='yellow'>
+									TC LOSES
+								</Progress>
+							</Grid.Column>
+							<Grid.Column>
+								<Progress percent={35} active progress inverted color='green'>
+									TC LOSES
+								</Progress>
+							</Grid.Column>
+						</Grid.Row>
+						<Grid.Row>
+							<Grid.Column>
+								<Progress percent={10} active progress inverted color='teal'>
+									TC LOSES
+								</Progress>
+							</Grid.Column>
+							<Grid.Column>
+								<Progress percent={95} active progress inverted color='blue'>
+									TC LOSES
+								</Progress>
+							</Grid.Column>
+						</Grid.Row>
+						<Grid.Row>
+							<Grid.Column>
+								<Progress percent={61} active progress inverted color='purple'>
+									TC LOSES
+								</Progress>
+							</Grid.Column>
+							<Grid.Column>
+								<Progress percent={31} active progress inverted color='pink'>
+									TC LOSES
+								</Progress>
+							</Grid.Column>
+						</Grid.Row>
+						<Grid.Row>
+							<Grid.Column>
+								<Progress percent={28} active progress inverted color='brown'>
+									TC LOSES
+								</Progress>
+							</Grid.Column>
+							<Grid.Column>
+								<Progress percent={19} active progress inverted color='black'>
+									TC LOSES
+								</Progress>
+							</Grid.Column>
+						</Grid.Row>
+					</Grid>
+				</Segment>
+			</div>
 		);
 	}
 }

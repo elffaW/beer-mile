@@ -2,3 +2,4 @@ node_modules/
 db/*.sqlite
 build/client/
 build/server/
+favicon_formats.zip

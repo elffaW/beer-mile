@@ -26,6 +26,9 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "lodash": "^4.17.4",
+    "material-ui": "^1.0.0-alpha.21",
+    "material-ui-icons": "^1.0.0-alpha.19",
     "node-dash-button": "^0.6.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

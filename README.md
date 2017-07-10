@@ -30,6 +30,7 @@ Idea is to set up a timing mechanism for a race. Uses dash buttons (one per runn
 ### How To Use
 - Clone it
 - `npm install`
+- `npm install -g webpack` -- global dependency on webpack
 - `npm run resetdb` -- creates DB and inserts runners and buttons
 - `npm run build-all` -- cleans the build/client and build/server dirs and rebuilds front and backend
 - `npm start` -- executes `node server` which serves frontend and handles buttons

@@ -8,7 +8,7 @@
     "build-be": "webpack --progress --profile --colors --config webpack_be.config.js",
     "build-fe": "webpack --progress --profile --colors --config webpack_fe.config.js",
     "build-all": "npm run clean && npm run build-be && npm run build-fe",
-    "clean": "rm -rf build/*/*.js*",
+    "clean": "rm -rf build/client/* build/server/*",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
     "resetdb": "node resetDB.js"

@@ -10,6 +10,8 @@ const socket = io();
 import 'semantic-ui-css/semantic.min.css';
 import './styles/style.css';
 
+const COLORS = [ 'red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'grey', 'black' ];
+
 export class BeerMile extends React.Component {
 	constructor() {
 		super();

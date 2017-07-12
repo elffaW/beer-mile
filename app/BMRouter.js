@@ -1,7 +1,7 @@
 import path from 'path';
 import falcor from 'falcor';
 import FalcorRouter from 'falcor-router';
-import * as db from '../db/crud.js';
+import * as db from './db/crud.js';
 
 let $ref = falcor.Model.ref;
 let $atom = falcor.Model.atom;

@@ -1,5 +1,5 @@
-var crud = require('./db/crud.js');
-var db = require('./db/db.js');
+var crud = require('./crud.js');
+var db = require('./db.js');
 
 db.dbConnection.sync({force:true}).
 	then(function() {

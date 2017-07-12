@@ -5,7 +5,7 @@ import path from 'path';
 
 import falcor from 'falcor';
 import falcorExpress from 'falcor-express';
-import { BMRouter } from './app/BMRouter';
+import { BMRouter } from './BMRouter';
 
 import dash_button from 'node-dash-button';
 import socketio from 'socket.io';
@@ -18,7 +18,7 @@ import http from 'http';
 
 let app = express();
 
-app.use(express.static('./build/client'));
+app.use(express.static('../build/client'));
 app.use(bodyParser.urlencoded({extended: false}));
 
 //setup general falcor route (intentionally creates new router for each call)
@@ -64,7 +64,7 @@ io.on('connection', function(socket){
 
 app.get('/', function(req, res) {
 	console.log('heard a thing');
-	res.sendFile(path.resolve(__dirname, 'build/index.html'));
+	res.sendFile(path.resolve(__dirname, '../build/index.html'));
 });
 
 /************************ LISTEN FOR BUTTON PRESSES ************************/

@@ -11,7 +11,7 @@
     "clean": "rm -rf build/client/* build/server/*",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node build/server/server.min.js",
-    "resetdb": "node resetDB.js"
+    "resetdb": "node app/db/resetDB.js"
   },
   "repository": {
     "type": "git",

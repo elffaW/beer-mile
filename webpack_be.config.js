@@ -4,23 +4,26 @@ var path = require('path');
 var fs = require('fs');
 var webpack = require('webpack');
 
-var nodeModules = fs.readdirSync('node_modules').filter(function(x) { return x !== '.bin' });
+var nodeModules = {};
+fs.readdirSync('node_modules').
+  filter(function(x) { return x !== '.bin' }).
+    forEach(function(mod) { nodeModules[mod] = 'commonjs ' + mod; });
     
 module.exports = {
-  entry: path.join(__dirname, './server.js'),
+  entry: path.join(__dirname, './app/server.js'),
   target: 'node',
   output: {
     path: path.join(__dirname, 'build/server'),
     filename: 'server.min.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js?$/,
-        exclude: [/node_modules/,/app\/ignore/],
+        exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {
-          presets: [ ['es2015', { 'modules': false } ] ]
+        options: {
+          presets: [ [ 'es2015', { 'modules': false } ] ]
         }
       }
     ]

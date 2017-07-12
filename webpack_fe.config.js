@@ -17,7 +17,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js?$/,
-        exclude: [/node_modules/,/app\/ignore/],
+        exclude: [/node_modules/],
         loader: 'babel-loader',
         query: {
           presets: [ ['es2015', { 'modules': false } ], 'react', 'stage-1' ]
@@ -30,6 +30,7 @@ module.exports = {
       { test: /\.woff$/, loader: 'url-loader?limit=100000' },
       { test: /\.woff2$/, loader: 'url-loader?limit=100000' },
       { test: /\.png$/, loader: 'file-loader' },
+      { test: /\.ico$/, loader: 'url-loader?limit=100000' },
       { test: /\.json$/, loader: 'json-loader' }
     ]
   },

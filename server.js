@@ -1,24 +1,30 @@
 //includes / requires
-let express = require('express');
-let bodyParser = require('body-parser');
-let path = require('path');
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
 
-let dash_button = require('node-dash-button');
-const socketio = require('socket.io');
+import falcor from 'falcor';
+import falcorExpress from 'falcor-express';
+import { BMRouter } from './app/BMRouter';
+
+import dash_button from 'node-dash-button';
+import socketio from 'socket.io';
 
 // import * as crud from 'db/crud.js';
-let crud = require('./db/crud.js');
-let db = require('./db/db.js');
+import crud from './db/crud.js';
+import db from './db/db.js';
 
-let http = require('http'),
-	app = express();
+import http from 'http';
 
-// const server = http.createServer( (req, res) => {
-// 	res.end();
-// });
+let app = express();
 
 app.use(express.static('./build/client'));
 app.use(bodyParser.urlencoded({extended: false}));
+
+//setup general falcor route (intentionally creates new router for each call)
+app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
+  return new BMRouter();
+}) );
 
 //basic listen statement, without callback
 const server = app.listen(8181, err => {

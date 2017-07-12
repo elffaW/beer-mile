@@ -3,3 +3,4 @@ db/*.sqlite
 build/client/
 build/server/
 favicon_formats.zip
+*.log

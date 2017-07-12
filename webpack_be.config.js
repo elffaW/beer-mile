@@ -28,6 +28,7 @@ module.exports = {
   externals: nodeModules,
   plugins: [
     new webpack.IgnorePlugin(/\.(css|less)$/),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),

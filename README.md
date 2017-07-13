@@ -1,5 +1,8 @@
 # beer-mile
 
+## STATUS
+- builds and runs without errors (except pcap - comment out node-dash-button import in server if missing libpcap-dev package)
+
 Idea is to set up a timing mechanism for a race. Uses dash buttons (one per runner) to track progress. At pre-defined checkpoints throughout the race, the runner will press the button to hit the checkpoint. Ideally we'll have a form where a runner can sign up and pick a button (alternative is we will pre-assign buttons manually in the DB). Also would be nice to have a live-updating race progress page for people to check on during the race. If we can't do that, would be nice to at least be able to display the results afterwards.
 
 
@@ -39,7 +42,7 @@ Idea is to set up a timing mechanism for a race. Uses dash buttons (one per runn
 - frontend (realtime display of times? add user? and associate user to button?)
   - [x] Set up skeleton project for front end under app/ directory
   - [x] Set up webpack as builder
-  - [ ] Update dependencies for front end stuff (in progress)
+  - [x] Update dependencies for front end stuff (will add as needed)
   - [ ] Update server to do more than just listen for button presses (i.e., make it an actual app server) (in progress)
   - [ ] static runner-to-button association (on data load)
   - [ ] dynamic runner-to-button association (i.e., via frontend)

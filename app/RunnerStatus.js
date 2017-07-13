@@ -38,6 +38,16 @@ const PERCENT_COMPLETE = {
 	9: { percent:100, message: "Finished!" }		//finish lap 4 (race over)
 }
 
+function msToTime(millis) {
+	let sec = parseInt(millis/1000) % 60;
+	let min = parseInt(millis/(1000*60)) % 60;
+	
+	sec = (sec < 10) ? '0' + sec : sec;
+
+	return min + ':' + sec;
+}
+
+
 class RunnerRow extends Component {
 	constructor() {
 		super();
@@ -46,21 +56,13 @@ class RunnerRow extends Component {
 	/* format milliseconds as minutes:seconds 
 	 *	output: MM:ss or M:ss if minutes < 10
 	*/
-	msToTime(millis) {
-		let sec = parseInt(millis/1000) % 60;
-		let min = parseInt(millis/(1000*60)) % 60;
-		
-		sec = (sec < 10) ? '0' + sec : sec;
-
-		return min + ':' + sec;
-	}
-
+	
 	render() {
 		let numCheckpoints = this.props.runner.timelogs.length;
 		let progress = PERCENT_COMPLETE[numCheckpoints];
 		//assumption that timelogs are in order is probably false... should sort first
 		let elapsedTime = Math.abs(this.props.runner.timelogs[numCheckpoints-1].timestamp - this.props.runner.timelogs[0].timestamp);
-		let progressMsg = progress.message + ' (last checkpoint at ' + this.msToTime(elapsedTime) + ')';	//add time of last checkpoint
+		let progressMsg = progress.message + ' (last checkpoint at ' + msToTime(elapsedTime) + ')';	//add time of last checkpoint
 
 		return (
 			<Grid.Row>
@@ -148,14 +150,15 @@ export class RunnerStatus extends Component {
 			);
 			idx = idx + 1;
 		});
-		//calculate elapsed time from start
+		//calculate elapsed time from start (now minus first check-in of first runner [good enough])
 		let curTime = Math.abs(new Date() - this.state.runners[0].timelogs[0].timestamp);
+		curTime = msToTime(curTime);
 		return (
 			<Segment>
 				<Grid columns={2} padded verticalAlign="top">
 					<Grid.Row>
 						<Header inverted textAlign="center" as='h3' icon>
-							Current Time: {new Date().toLocaleTimeString()}
+							Elapsed Time: {curTime}
 						</Header>
 					</Grid.Row>
 					{runnerStatuses}

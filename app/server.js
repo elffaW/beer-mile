@@ -62,9 +62,11 @@ io.on('connection', function(socket){
 	});
 });
 
+app.use(express.static('build'));
+
 app.get('/', function(req, res) {
 	console.log('heard a thing');
-	res.sendFile(path.resolve(__dirname, '../build/index.html'));
+	res.sendFile('index.html');
 });
 
 /************************ LISTEN FOR BUTTON PRESSES ************************/

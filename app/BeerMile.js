@@ -24,7 +24,7 @@ model.get(['thingsById', thingId, 'thingParam']).
 */
 
 // import UI elements
-import { Button, Progress, Grid, Segment, Header, Icon } from 'semantic-ui-react';
+import { Header, Icon } from 'semantic-ui-react';
 
 //socketio for client-server communications (incl. data update without page refresh)
 const io = require('socket.io-client');
@@ -50,14 +50,14 @@ export class BeerMile extends Component {
 	}
 
 	render() {
-		console.log(this.state.socketMessage);
+		
 		return (
 			<div>
 				<Header inverted textAlign="center" as='h2' icon>
-					<Icon name='beer' />
+					<Icon name='beer' color="yellow" bordered circular/>
 					BEER MILE 2017
 					<Header.Subheader>
-						Current Time: ??? Free t-shirts provided by TC. Who loses.
+						Free t-shirts provided by TC. Who loses.
 					</Header.Subheader>
 				</Header>
 				<RunnerStatus />

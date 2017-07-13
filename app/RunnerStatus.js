@@ -22,20 +22,20 @@ model.get(['thingsById', thingId, 'thingParam']).
 */
 
 // import UI elements
-import { Progress, Grid, Segment, Icon } from 'semantic-ui-react';
+import { Header, Progress, Grid, Segment, Icon } from 'semantic-ui-react';
 
 //helper statics
 const COLORS = [ 'red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'grey', 'black' ];
 const PERCENT_COMPLETE = {
-	1:0,	//start
-	2:5,	//finish beer 1
-	3:25,	//finish lap 1
-	4:30,	//finish beer 2
-	5:50,	//finish lap 2
-	6:55,	//finish beer 3
-	7:75,	//finish lap 3
-	8:80,	//finish beer 4
-	9:100	//finish lap 4 (race over)
+	1: { percent:0, message: "Drinking beer 1!" },	//start
+	2: { percent:5, message: "Running Lap 1!" },	//finish beer 1
+	3: { percent:25, message: "Drinking beer 2!" },	//finish lap 1
+	4: { percent:30, message: "Running lap 2!" },	//finish beer 2
+	5: { percent:50, message: "Drinking beer 3!" },	//finish lap 2
+	6: { percent:55, message: "Running lap 3!" },	//finish beer 3
+	7: { percent:75, message: "Drinking beer 4!" },	//finish lap 3
+	8: { percent:80, message: "Running lap 4!" },	//finish beer 4
+	9: { percent:100, message: "Finished!" }		//finish lap 4 (race over)
 }
 
 class RunnerRow extends Component {
@@ -43,23 +43,38 @@ class RunnerRow extends Component {
 		super();
 	}
 
+	/* format milliseconds as minutes:seconds 
+	 *	output: MM:ss or M:ss if minutes < 10
+	*/
+	msToTime(millis) {
+		let sec = parseInt(millis/1000) % 60;
+		let min = parseInt(millis/(1000*60)) % 60;
+		
+		sec = (sec < 10) ? '0' + sec : sec;
+
+		return min + ':' + sec;
+	}
+
 	render() {
-		console.log(this.props.color);
-		let pct = PERCENT_COMPLETE[this.props.runner.timelogs.length];
-		console.log('percent complete: ' + pct)
+		let numCheckpoints = this.props.runner.timelogs.length;
+		let progress = PERCENT_COMPLETE[numCheckpoints];
+		//assumption that timelogs are in order is probably false... should sort first
+		let elapsedTime = Math.abs(this.props.runner.timelogs[numCheckpoints-1].timestamp - this.props.runner.timelogs[0].timestamp);
+		let progressMsg = progress.message + ' (last checkpoint at ' + this.msToTime(elapsedTime) + ')';	//add time of last checkpoint
+
 		return (
 			<Grid.Row>
-				<Grid.Column width={3}>
+				<Grid.Column width={2}>
 					<Grid.Row>
 						{this.props.runner.name}
 					</Grid.Row>
 					<Grid.Row>
-						{this.props.runner.button.name}
+						[{this.props.runner.button.name}]
 					</Grid.Row>
 				</Grid.Column>
-				<Grid.Column width={13}>
-					<Progress percent={pct} active progress inverted color={this.props.color}>
-						TC LOSES
+				<Grid.Column width={14}>
+					<Progress percent={progress.percent} active progress inverted color={this.props.color}>
+						{progressMsg}
 					</Progress>
 				</Grid.Column>
 			</Grid.Row>
@@ -74,7 +89,7 @@ export class RunnerStatus extends Component {
 	}
 
 	componentWillMount() {
-		model.get(['runnersList','length']).then( length => { console.log('num runners: ' + length); } );
+		// model.get(['runnersList','length']).then( length => { console.log('num runners: ' + length); } );
 			// model.get(['runnersList', {from:0,to:length-1}, ['name', 'button', 'timelogs'], ['name', 'timestamp']])}).
 			// 	then( json => {
 			// 		if(json === undefined) {
@@ -89,102 +104,61 @@ export class RunnerStatus extends Component {
 			// 		}
 			// 		this.setState({ runners:runners});
 			// 	});
-
-		let runners = [];
-		runners.push({
-			id: 12,
-			name: "Matt",
-			button: {name:"poopbags"},
-			timelogs: [
-				{timestamp:"2017-07-21 18:30:00"},
-				{timestamp:"2017-07-21 18:31:00"},
-				{timestamp:"2017-07-21 18:34:00"}
-			]
-		});
-		runners.push({
-			id: 23,
-			name: "Mike",
-			button: {name:"dang"},
-			timelogs: [
-				{timestamp:"2017-07-21 18:30:01"},
-				{timestamp:"2017-07-21 18:32:00"},
-				{timestamp:"2017-07-21 18:35:00"},
-				{timestamp:"2017-07-21 18:36:01"}
-			]
-		});
-		runners.push({
-			id: 24,
-			name: "TC",
-			button: {name:"stupid"},
-			timelogs: [
-				{timestamp:"2017-07-21 18:30:02"},
-				{timestamp:"2017-07-21 18:35:00"}
-			]
-		});
+		
+		let runners = [
+			{
+				id: 12,
+				name: "Matt",
+				button: {name:"poopbags"},
+				timelogs: [
+					{timestamp:new Date("2017-07-21 18:30:12")},
+					{timestamp:new Date("2017-07-21 18:31:41")},
+					{timestamp:new Date("2017-07-21 18:34:52")}
+				]
+			}, {
+				id: 23,
+				name: "Mike",
+				button: {name:"dang"},
+				timelogs: [
+					{timestamp:new Date("2017-07-21 18:30:32")},
+					{timestamp:new Date("2017-07-21 18:32:56")},
+					{timestamp:new Date("2017-07-21 18:35:11")},
+					{timestamp:new Date("2017-07-21 18:36:01")}
+				]
+			}, {
+				id: 24,
+				name: "TC",
+				button: {name:"stupid"},
+				timelogs: [
+					{timestamp:new Date("2017-07-21 18:30:02")},
+					{timestamp:new Date("2017-07-21 18:35:53")}
+				]
+			}
+		];
 		this.setState({runners:runners});
 	}
-
-	// componentWillReceiveProps(nextProps) {
-	// 	model.get('test').
-	// 		then( json => { 
-	// 			console.log(json);
-	// 		});
-	// }
 
 	render() {
 		let runnerStatuses = [];
 		let idx = 0;
 		this.state.runners.forEach(runner => {
 			runnerStatuses.push(
-				<RunnerStatus runner={runner}
-							  color={COLORS[idx % COLORS.length]} />
+				<RunnerRow runner={runner}
+						   color={COLORS[idx % COLORS.length]} />
 			);
 			idx = idx + 1;
 		});
+		//calculate elapsed time from start
+		let curTime = Math.abs(new Date() - this.state.runners[0].timelogs[0].timestamp);
 		return (
 			<Segment>
-				<Grid columns={2} >
+				<Grid columns={2} padded verticalAlign="top">
+					<Grid.Row>
+						<Header inverted textAlign="center" as='h3' icon>
+							Current Time: {new Date().toLocaleTimeString()}
+						</Header>
+					</Grid.Row>
 					{runnerStatuses}
-					<Grid.Row>
-						<Grid.Column width={3}>
-							TC LOSES
-						</Grid.Column>
-						<Grid.Column width={13}>
-							<Progress percent={35} active progress inverted color='green'>
-								TC LOSES
-							</Progress>
-						</Grid.Column>
-					</Grid.Row>
-					<Grid.Row>
-						<Grid.Column width={3}>
-							TC LOSES
-						</Grid.Column>
-						<Grid.Column width={13}>
-							<Progress percent={95} active progress inverted color='blue'>
-								TC LOSES
-							</Progress>
-						</Grid.Column>
-					</Grid.Row>
-					<Grid.Row>
-						<Grid.Column width={3}>
-							TC LOSES
-						</Grid.Column>
-						<Grid.Column width={13}>
-							<Progress percent={31} active progress inverted color='pink'>
-								TC LOSES
-							</Progress>
-						</Grid.Column>
-					</Grid.Row>
-					<Grid.Row>
-						<Grid.Column width={3}>
-							TC LOSES
-						</Grid.Column>
-						<Grid.Column width={13}>
-							<Progress percent={19} active progress inverted color='black'>
-								TC LOSES
-							</Progress>
-						</Grid.Column>
-					</Grid.Row>
 				</Grid>
 			</Segment>
 		);

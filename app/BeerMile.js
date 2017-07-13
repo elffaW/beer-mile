@@ -42,11 +42,7 @@ export class BeerMile extends Component {
 	}
 
 	componentWillMount() {
-		socket.emit('update', 'test');
-		model.get('test').
-			then( json => { 
-				console.log(json);
-			});
+		
 	}
 
 	handleRunnerCheckpoint(update) {

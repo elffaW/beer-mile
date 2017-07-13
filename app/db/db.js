@@ -10,7 +10,7 @@ let buttonModel = require('./model/button');
 
 var dbConnection = new Sequelize('racetimes', null, null, {
   dialect: 'sqlite',
-  storage: 'db/racetimes.sqlite',
+  storage: 'app/db/racetimes.sqlite',
   logging: false	//false to turn off SQL logging (default true)
 });
 

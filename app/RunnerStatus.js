@@ -38,6 +38,9 @@ const PERCENT_COMPLETE = {
 	9: { percent:100, message: "Finished!" }		//finish lap 4 (race over)
 }
 
+/* format milliseconds as minutes:seconds 
+ *	output: MM:ss or M:ss if minutes < 10
+ */
 function msToTime(millis) {
 	let sec = parseInt(millis/1000) % 60;
 	let min = parseInt(millis/(1000*60)) % 60;
@@ -47,31 +50,45 @@ function msToTime(millis) {
 	return min + ':' + sec;
 }
 
+class ElapsedTime extends Component {
+	constructor() {
+		super();
+	}
+
+	render() {
+		//calculate elapsed time from start (now minus first check-in of first runner [good enough])
+		let curTime = Math.abs(new Date().getTime() - this.props.firstCheckin.getTime());
+		curTime = msToTime(curTime);
+		return (
+			<Grid.Row>
+				<Header inverted textAlign="center" as='h3' icon>
+					Elapsed Time: {curTime}
+				</Header>
+			</Grid.Row>
+		);
+	}
+}
 
 class RunnerRow extends Component {
 	constructor() {
 		super();
 	}
 
-	/* format milliseconds as minutes:seconds 
-	 *	output: MM:ss or M:ss if minutes < 10
-	*/
-	
 	render() {
 		let numCheckpoints = this.props.runner.timelogs.length;
 		let progress = PERCENT_COMPLETE[numCheckpoints];
 		//assumption that timelogs are in order is probably false... should sort first
-		let elapsedTime = Math.abs(this.props.runner.timelogs[numCheckpoints-1].timestamp - this.props.runner.timelogs[0].timestamp);
+		let elapsedTime = Math.abs(this.props.runner.timelogs[numCheckpoints-1].timestamp.getTime() - this.props.runner.timelogs[0].timestamp.getTime());
 		let progressMsg = progress.message + ' (last checkpoint at ' + msToTime(elapsedTime) + ')';	//add time of last checkpoint
 
 		return (
 			<Grid.Row>
 				<Grid.Column width={2}>
 					<Grid.Row>
-						{this.props.runner.name}
+						<strong>{this.props.runner.name}</strong>
 					</Grid.Row>
 					<Grid.Row>
-						[{this.props.runner.button.name}]
+						<i>[{this.props.runner.button.name}]</i>
 					</Grid.Row>
 				</Grid.Column>
 				<Grid.Column width={14}>
@@ -91,7 +108,7 @@ export class RunnerStatus extends Component {
 	}
 
 	componentWillMount() {
-		// model.get(['runnersList','length']).then( length => { console.log('num runners: ' + length); } );
+		model.get(['runnersList','length']).then( length => { console.log('num runners: ' + length); } );
 			// model.get(['runnersList', {from:0,to:length-1}, ['name', 'button', 'timelogs'], ['name', 'timestamp']])}).
 			// 	then( json => {
 			// 		if(json === undefined) {
@@ -150,17 +167,11 @@ export class RunnerStatus extends Component {
 			);
 			idx = idx + 1;
 		});
-		//calculate elapsed time from start (now minus first check-in of first runner [good enough])
-		let curTime = Math.abs(new Date() - this.state.runners[0].timelogs[0].timestamp);
-		curTime = msToTime(curTime);
+		
 		return (
 			<Segment>
 				<Grid columns={2} padded verticalAlign="top">
-					<Grid.Row>
-						<Header inverted textAlign="center" as='h3' icon>
-							Elapsed Time: {curTime}
-						</Header>
-					</Grid.Row>
+					<ElapsedTime firstCheckin={this.state.runners[0].timelogs[0].timestamp} />
 					{runnerStatuses}
 				</Grid>
 			</Segment>

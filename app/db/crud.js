@@ -84,5 +84,19 @@ module.exports = {
 					reject(err);
 				});
 		});
+	},
+
+	getRunnerCount: () => {
+		return new Promise(function(resolve, reject) {
+			db.runner.findAndCountAll({
+				where: { button_id: { $ne: null } }
+			}).
+			then(count => {
+				resolve(count);
+			}).
+			catch(err => {
+				reject(err);
+			});
+		});
 	}
 };

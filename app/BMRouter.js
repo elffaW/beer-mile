@@ -8,14 +8,14 @@ let $atom = falcor.Model.atom;
 
 let routes = [
 	{
-		/* route example
-		route: 'thing.length',
-		get(pathSet) {
-			return new Promise(function(resolve,reject) {
-				db.getThingCount().
+		// model.get(['runnersList','length']).then( length => { 
+		route: 'runnersList.length',
+		get() {
+			return new Promise(function(resolve, reject) {
+				db.getRunnerCount().
 					then(function(res) {
 						let retVal = [];
-						retVal.push( { path : [ 'thing', 'length' ], value: res } );
+						retVal.push( { path: [ 'runnersList', 'length' ], value: res });
 						resolve(retVal);
 					}).
 					catch(function(err) {
@@ -23,14 +23,24 @@ let routes = [
 					});
 			});
 		}
-		end route example */
-		//test route
-		route: "test",
-		get(pathSet) {
-			console.log('Hit "test" route, with pathSet: ' + JSON.stringify(pathSet));
-			return { path: ["test"], value: "Falcor works!" };
-		}
 	}
+	// {
+	// 	// model.get(['runnersList', {from:0,to:length-1}, ['name', 'button', 'timelogs'], ['name', 'timestamp']])}).
+	// 	route: 'runnersList',
+	// 	get() {
+	// 		return new Promise(function(resolve, reject) {
+	// 			db.getRunnerCount().
+	// 				then(function(res) {
+	// 					let retVal = [];
+	// 					retVal.push( { path: [ 'runnersList', 'length' ], value: res });
+	// 					resolve(retVal);
+	// 				}).
+	// 				catch(function(err) {
+	// 					reject(err);
+	// 				});
+	// 		});
+	// 	}
+	// }
 ];
 
 //pre-ES2015 way

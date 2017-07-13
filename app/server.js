@@ -96,6 +96,8 @@ app.get('/', function(req, res) {
 // 				    //insert a new timestamp into the DB
 // 				    console.log(`Detected button with MAC [${dash_mac}], inserting timestamp into DB [${new Date()}]`);
 // 				    crud.insertTimestamp(dash_mac, new Date());
+//					//TODO add socket emit to notify frontend to update (event "runnerCheckpoint")
+
 // 				});
 
 // 			}).catch(function(err) {

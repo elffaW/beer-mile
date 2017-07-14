@@ -52,7 +52,7 @@ export class BeerMile extends Component {
 	getRunnerDetails() {
 		//get runners here so we can pass to any other places that need it
 		model.getValue(['runnersList','length']).then( length => { 
-			model.get(['runnersList', {from:0,to:length-1}, ['name', 'button', 'timelogs'], ['id','name', 'timestamp']])}).
+			model.get(['runnersList', {from:0,to:length-1}, ['id','name', 'button', 'timelogs'], ['id','name', 'timestamp']])}).
 				then( json => {
 					console.log('returned from model gets');
 					console.log('Found ' + length + ' runners');
@@ -61,7 +61,7 @@ export class BeerMile extends Component {
 						console.log('no runners found');
 						return;
 					}
-					// let runnersList = json['runnersList'];
+					// let runnersList = json['jsonGraph']['runnersList'];
 					// let runners = [];
 					// for(let r in runnersList) {
 					// 	console.log(runnersList[r]);

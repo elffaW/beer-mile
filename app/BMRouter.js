@@ -29,20 +29,121 @@ let routes = [
 		// model.get(['runnersList', {from:0,to:length-1}, ['id','name', 'button', 'timelogs'], ['id','name', 'timestamp']])}).
 		route: 'runnersList[{integers:indices}]["id","name","button","timelog"]["id","name","timestamp"]',
 		get(pathSet) {
+			/* pathSet:
+			[
+			  "runnersList",
+			  [0:12],
+			  [ "button","id","name","timelog"],
+			  [ "id","name","timestamp"]
+			]
+			*/
 			console.log('hit runners route');
-			console.log(JSON.stringify(pathSet,null,2));
-			resolve('nope');
-			// return new Promise(function(resolve, reject) {
-			// 	db.getRunnerCount().
-			// 		then(function(res) {
-			// 			let retVal = [];
-			// 			retVal.push( { path: [ 'runnersList', 'length' ], value: res });
-			// 			resolve(retVal);
-			// 		}).
-			// 		catch(function(err) {
-			// 			reject(err);
-			// 		});
-			// });
+			return new Promise(function(resolve, reject) {
+				let retVal = [];
+
+				for(let i in pathSet.indices) {
+					let idx = pathSet.indices[i];
+
+					db.getAllRunners().
+						then(function(runners) {
+							console.log('retrieved runners from db: ' + JSON.stringify(runners,null,2));
+							for(let r in runners) {
+								let runner = runners[r];
+								retVal.push( { path: [ 'runnersList', idx ], value: $ref('runnersById', runner.id) });
+								retVal.push( { path: [ 'runnersList', idx, 'button' ], value: $ref('buttonsById', runner.button.id) });
+								retVal.push( { path: [ 'runnersList', idx, 'timelog' ], value: $atom(runner.timelogs) });
+							}
+							
+						}).
+						catch(function(err) {
+							console.log('error retrieving runner from db: ' + JSON.stringify(err,null,2));
+							reject(err);
+						});
+				}
+
+				resolve(retVal);
+			});
+		}
+	},
+	{
+		route: 'runnersById[{integers:ids}]["id","name"]',
+		get(pathSet) {
+			console.log('runnersById route');
+			return new Promise(function(resolve, reject) {
+				let retVal = [];
+
+				for(let i in pathSet.ids) {
+					let id = pathSet.ids[i];
+
+					db.getRunnerById(id).
+						then(function(runner) {
+							console.log('retrieved runner from db: ' + JSON.stringify(runner,null,2));
+
+							retVal.push( { path: [ 'runnersById', id, 'id' ], value: runner.id });
+							retVal.push( { path: [ 'runnersById', id, 'name' ], value: runner.name });
+						}).
+						catch(function(err) {
+							console.log('error retrieving runner from db: ' + JSON.stringify(err,null,2));
+							reject(err);
+						});
+				}
+				console.log('runnersById retVal: ' + JSON.stringify(retVal, null,2));
+				resolve(retVal);
+			});
+		}
+	},
+	{
+		route: 'buttonsById[{integers:ids}]["id","name"]',
+		get(pathSet) {
+			console.log('buttonsById route');
+			return new Promise(function(resolve, reject) {
+				let retVal = [];
+
+				for(let i in pathSet.ids) {
+					let id = pathSet.ids[i];
+
+					db.getButtonById(id).
+						then(function(button) {
+							console.log('retrieved button from db: ' + JSON.stringify(button,null,2));
+
+							retVal.push( { path: [ 'buttonsById', id, 'id' ], value: button.id });
+							retVal.push( { path: [ 'buttonsById', id, 'name' ], value: button.name });
+						}).
+						catch(function(err) {
+							console.log('error retrieving button from db: ' + JSON.stringify(err,null,2));
+							reject(err);
+						});
+				}
+				console.log('buttonsById retVal: ' + JSON.stringify(retVal, null,2));
+				resolve(retVal);
+			});
+		}
+	},
+	{
+		route: 'timelogsById[{integers:ids}]["id","timestamp"]',
+		get(pathSet) {
+			console.log('timelogsById route');
+			return new Promise(function(resolve, reject) {
+				let retVal = [];
+
+				for(let i in pathSet.ids) {
+					let id = pathSet.ids[i];
+
+					db.getTimelogById(id).
+						then(function(timelog) {
+							console.log('retrieved timelog from db: ' + JSON.stringify(timelog,null,2));
+
+							retVal.push( { path: [ 'timelogsById', id, 'id' ], value: timelog.id });
+							retVal.push( { path: [ 'timelogsById', id, 'timestamp' ], value: timelog.timestamp });
+						}).
+						catch(function(err) {
+							console.log('error retrieving timelog from db: ' + JSON.stringify(err,null,2));
+							reject(err);
+						});
+				}
+				console.log('timelogsById retVal: ' + JSON.stringify(retVal, null,2));
+				resolve(retVal);
+			});
 		}
 	}
 ];

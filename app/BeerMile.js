@@ -61,84 +61,84 @@ export class BeerMile extends Component {
 						console.log('no runners found');
 						return;
 					}
-					// let runnersList = json['jsonGraph']['runnersList'];
-					// let runners = [];
-					// for(let r in runnersList) {
-					// 	console.log(runnersList[r]);
-					// 	runners.push(runnersList[r]);
-					// }
-					// this.setState({ runners:runners});
+					let runnersList = json['jsonGraph']['runnersList'];
+					let runners = [];
+					for(let r in runnersList) {
+						console.log(runnersList[r]);
+						runners.push(runnersList[r]);
+					}
+					this.setState({ runners:runners});
 				});
 			});
 		
-		let runners = [
-			{
-				id: 12,
-				name: "Matt",
-				button: {id:1, name:"poopbags"},
-				timelogs: [
-					{timestamp:new Date("2017-07-21 18:30:12")},
-					{timestamp:new Date("2017-07-21 18:31:41")},
-					{timestamp:new Date("2017-07-21 18:34:52")}
-				]
-			}, {
-				id: 23,
-				name: "Mike",
-				button: {id:2, name:"dang"},
-				timelogs: [
-					{timestamp:new Date("2017-07-21 18:30:32")},
-					{timestamp:new Date("2017-07-21 18:32:56")},
-					{timestamp:new Date("2017-07-21 18:35:11")},
-					{timestamp:new Date("2017-07-21 18:36:01")}
-				]
-			}, {
-				id: 24,
-				name: "TC",
-				button: {id:3, name:"stupid"},
-				timelogs: [
-					{timestamp:new Date("2017-07-21 18:30:02")},
-					{timestamp:new Date("2017-07-21 18:35:53")}
-				]
-			}, {
-				id: 25,
-				name: "Jay",
-				button: {id:4, name:"poof"},
-				timelogs: [
-					{timestamp:new Date("2017-07-21 18:30:32")},
-					{timestamp:new Date("2017-07-21 18:32:56")},
-					{timestamp:new Date("2017-07-21 18:35:11")},
-					{timestamp:new Date("2017-07-21 18:36:01")}
-				]
-			}, {
-				id: 26,
-				name: "Caroline",
-				button: {id:5, name:"milk baby"},
-				timelogs: [
-					{timestamp:new Date("2017-07-21 18:30:32")},
-					{timestamp:new Date("2017-07-21 18:32:56")},
-					{timestamp:new Date("2017-07-21 18:35:11")},
-					{timestamp:new Date("2017-07-21 18:37:56")},
-					{timestamp:new Date("2017-07-21 18:38:11")},
-					{timestamp:new Date("2017-07-21 18:39:01")}
-				]
-			}, {
-				id: 27,
-				name: "JR",
-				button: {id:6, name:"bai"},
-				timelogs: [
-					{timestamp:new Date("2017-07-21 18:30:32")},
-					{timestamp:new Date("2017-07-21 18:31:56")},
-					{timestamp:new Date("2017-07-21 18:32:11")},
-					{timestamp:new Date("2017-07-21 18:33:56")},
-					{timestamp:new Date("2017-07-21 18:34:11")},
-					{timestamp:new Date("2017-07-21 18:35:56")},
-					{timestamp:new Date("2017-07-21 18:36:11")},
-					{timestamp:new Date("2017-07-21 18:37:11")},
-					{timestamp:new Date("2017-07-21 18:39:01")}
-				]
-			}
-		];
-		this.setState({runners:runners});
+		// let runners = [
+		// 	{
+		// 		id: 12,
+		// 		name: "Matt",
+		// 		button: {id:1, name:"poopbags",timelog: [
+		// 			{timestamp:new Date("2017-07-21 18:30:12")},
+		// 			{timestamp:new Date("2017-07-21 18:31:41")},
+		// 			{timestamp:new Date("2017-07-21 18:34:52")}
+		// 		]},
+		// 		
+		// 	}, {
+		// 		id: 23,
+		// 		name: "Mike",
+		// 		button: {id:2, name:"dang"},
+		// 		timelog: [
+		// 			{timestamp:new Date("2017-07-21 18:30:32")},
+		// 			{timestamp:new Date("2017-07-21 18:32:56")},
+		// 			{timestamp:new Date("2017-07-21 18:35:11")},
+		// 			{timestamp:new Date("2017-07-21 18:36:01")}
+		// 		]
+		// 	}, {
+		// 		id: 24,
+		// 		name: "TC",
+		// 		button: {id:3, name:"stupid"},
+		// 		timelog: [
+		// 			{timestamp:new Date("2017-07-21 18:30:02")},
+		// 			{timestamp:new Date("2017-07-21 18:35:53")}
+		// 		]
+		// 	}, {
+		// 		id: 25,
+		// 		name: "Jay",
+		// 		button: {id:4, name:"poof"},
+		// 		timelog: [
+		// 			{timestamp:new Date("2017-07-21 18:30:32")},
+		// 			{timestamp:new Date("2017-07-21 18:32:56")},
+		// 			{timestamp:new Date("2017-07-21 18:35:11")},
+		// 			{timestamp:new Date("2017-07-21 18:36:01")}
+		// 		]
+		// 	}, {
+		// 		id: 26,
+		// 		name: "Caroline",
+		// 		button: {id:5, name:"milk baby"},
+		// 		timelog: [
+		// 			{timestamp:new Date("2017-07-21 18:30:32")},
+		// 			{timestamp:new Date("2017-07-21 18:32:56")},
+		// 			{timestamp:new Date("2017-07-21 18:35:11")},
+		// 			{timestamp:new Date("2017-07-21 18:37:56")},
+		// 			{timestamp:new Date("2017-07-21 18:38:11")},
+		// 			{timestamp:new Date("2017-07-21 18:39:01")}
+		// 		]
+		// 	}, {
+		// 		id: 27,
+		// 		name: "JR",
+		// 		button: {id:6, name:"bai"},
+		// 		timelog: [
+		// 			{timestamp:new Date("2017-07-21 18:30:32")},
+		// 			{timestamp:new Date("2017-07-21 18:31:56")},
+		// 			{timestamp:new Date("2017-07-21 18:32:11")},
+		// 			{timestamp:new Date("2017-07-21 18:33:56")},
+		// 			{timestamp:new Date("2017-07-21 18:34:11")},
+		// 			{timestamp:new Date("2017-07-21 18:35:56")},
+		// 			{timestamp:new Date("2017-07-21 18:36:11")},
+		// 			{timestamp:new Date("2017-07-21 18:37:11")},
+		// 			{timestamp:new Date("2017-07-21 18:39:01")}
+		// 		]
+		// 	}
+		// ];
+		// this.setState({runners:runners});
 	}
 
 	render() {

@@ -119,11 +119,74 @@ module.exports = {
 				where: { button_id: { $ne: null } }
 			}
 			*/
-	getRunnerCount: () => {
+	getRunnerCount() {
 		return new Promise(function(resolve, reject) {
 			db.runner.findAndCountAll().
 			then(runners => {
 				resolve(runners.count);
+			}).
+			catch(err => {
+				reject(err);
+			});
+		});
+	},
+
+	getAllRunners() {
+		return new Promise(function(resolve, reject) {
+			db.runner.findAll({
+					include: [{
+						model: db.button,
+						include: [db.timelog]
+					}]
+				}).
+				then(runners => {
+					console.log('got runners: ' + JSON.stringify(runners,null,2));
+					resolve(runners);
+				}).
+				catch(err => {
+					reject(err);
+				});
+		});
+	},
+
+	getRunnerById(id) {
+		return new Promise(function(resolve, reject) {
+			db.runner.findOne({
+				where: { id: {$eq: id }}
+			}).
+			then(runner => {
+				console.log('got runner: ' + JSON.stringify(runner,null,2));
+				resolve(runner);
+			}).
+			catch(err => {
+				reject(err);
+			});
+		});
+	},
+
+	getButtonById(id) {
+		return new Promise(function(resolve, reject) {
+			db.button.findOne({
+				where: { id: {$eq: id }}
+			}).
+			then(button => {
+				console.log('got button: ' + JSON.stringify(button,null,2));
+				resolve(button);
+			}).
+			catch(err => {
+				reject(err);
+			});
+		});
+	},
+
+	getTimelogById(id) {
+		return new Promise(function(resolve, reject) {
+			db.timelog.findOne({
+				where: { id: {$eq: id }}
+			}).
+			then(timelog => {
+				console.log('got timelog: ' + JSON.stringify(timelog,null,2));
+				resolve(timelog);
 			}).
 			catch(err => {
 				reject(err);

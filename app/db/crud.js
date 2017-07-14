@@ -114,11 +114,14 @@ module.exports = {
 	},
 
 	/* returns a count of runners in the database (who have buttons associated to them) */
+	/* TODO add this back in (as param to findAndCountAll) once we associate runners to buttons:
+		{
+				where: { button_id: { $ne: null } }
+			}
+			*/
 	getRunnerCount: () => {
 		return new Promise(function(resolve, reject) {
-			db.runner.findAndCountAll({
-				where: { button_id: { $ne: null } }
-			}).
+			db.runner.findAndCountAll().
 			then(runners => {
 				resolve(runners.count);
 			}).

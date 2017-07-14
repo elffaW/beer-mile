@@ -23,24 +23,27 @@ let routes = [
 					});
 			});
 		}
+	},
+	{
+		// model.get(['runnersList', {from:0,to:length-1}, ['name', 'button', 'timelogs'], ['id','name', 'timestamp']])}).
+		route: 'runnersList[{integers:indices}]["name","button","timelogs"]["id","name","timestamp"]',
+		get(pathSet) {
+			console.log('hit runners route');
+			console.log(JSON.stringify(pathSet,null,2));
+			resolve('nope');
+			// return new Promise(function(resolve, reject) {
+			// 	db.getRunnerCount().
+			// 		then(function(res) {
+			// 			let retVal = [];
+			// 			retVal.push( { path: [ 'runnersList', 'length' ], value: res });
+			// 			resolve(retVal);
+			// 		}).
+			// 		catch(function(err) {
+			// 			reject(err);
+			// 		});
+			// });
+		}
 	}
-	// {
-	// 	// model.get(['runnersList', {from:0,to:length-1}, ['name', 'button', 'timelogs'], ['name', 'timestamp']])}).
-	// 	route: 'runnersList',
-	// 	get() {
-	// 		return new Promise(function(resolve, reject) {
-	// 			db.getRunnerCount().
-	// 				then(function(res) {
-	// 					let retVal = [];
-	// 					retVal.push( { path: [ 'runnersList', 'length' ], value: res });
-	// 					resolve(retVal);
-	// 				}).
-	// 				catch(function(err) {
-	// 					reject(err);
-	// 				});
-	// 		});
-	// 	}
-	// }
 ];
 
 //pre-ES2015 way

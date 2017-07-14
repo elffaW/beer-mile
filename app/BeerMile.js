@@ -51,21 +51,24 @@ export class BeerMile extends Component {
 
 	getRunnerDetails() {
 		//get runners here so we can pass to any other places that need it
-		model.get(['runnersList','length']).then( length => { console.log('num runners: ' + length); } );
-			// model.get(['runnersList', {from:0,to:length-1}, ['name', 'button', 'timelogs'], ['id','name', 'timestamp']])}).
-			// 	then( json => {
-			// 		if(json === undefined) {
-			// 			console.log('no runners found');
-			// 			return;
-			// 		}
-			// 		let runnersList = json['runnersList'];
-			// 		let runners = [];
-			// 		for(let r in runnersList) {
-			// 			console.log(runnersList[r]);
-			// 			runners.push(runnersList[r]);
-			// 		}
-			// 		this.setState({ runners:runners});
-			// 	});
+		model.getValue(['runnersList','length']).then( length => { 
+			model.get(['runnersList', {from:0,to:length-1}, ['name', 'button', 'timelogs'], ['id','name', 'timestamp']])}).
+				then( json => {
+					console.log('returned from model gets');
+					console.log('Found ' + length + ' runners');
+					console.log(JSON.stringify(json,null,2));
+					if(json === undefined) {
+						console.log('no runners found');
+						return;
+					}
+					// let runnersList = json['runnersList'];
+					// let runners = [];
+					// for(let r in runnersList) {
+					// 	console.log(runnersList[r]);
+					// 	runners.push(runnersList[r]);
+					// }
+					// this.setState({ runners:runners});
+				});
 		
 		let runners = [
 			{

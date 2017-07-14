@@ -11,6 +11,7 @@ let routes = [
 		// model.get(['runnersList','length']).then( length => { 
 		route: 'runnersList.length',
 		get() {
+			console.log('hit runners length route');
 			return new Promise(function(resolve, reject) {
 				db.getRunnerCount().
 					then(function(res) {

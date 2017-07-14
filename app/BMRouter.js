@@ -47,8 +47,8 @@ let routes = [
 						console.log('retrieved runners from db: ' + JSON.stringify(runners,null,2));
 						for(let r in runners) {
 							let runner = runners[r];
-							retVal.push( { path: [ 'runnersList', r ], value: $ref('runnersById', runner.id) });
-							// retVal.push( { path: [ 'runnersList', r, 'button' ], value: $ref('buttonsById', runner.button.id) });
+							retVal.push( { path: [ 'runnersList', r ], value: $ref(['runnersById', runner.id]) });
+							// retVal.push( { path: [ 'runnersList', r, 'button' ], value: $ref(['buttonsById', runner.button.id]) });
 							// retVal.push( { path: [ 'runnersList', r, 'timelog' ], value: $atom(runner.timelogs) });
 							retVal.push( { path: [ 'runnersList', r, 'button', 'id' ], value: runner.button.id });
 							retVal.push( { path: [ 'runnersList', r, 'button', 'name' ], value: runner.button.name });
@@ -59,7 +59,7 @@ let routes = [
 							}
 							retVal.push( { path: [ 'runnersList', r, 'timelog' ], value: $atom(timelogs) });
 						}
-						console.log('runnersList retVal: ' + JSON.stringify(retVal));
+						console.log('runnersList retVal: ' + JSON.stringify(retVal,null,2));
 						resolve(retVal);
 					}).
 					catch(function(err) {

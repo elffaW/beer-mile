@@ -52,7 +52,7 @@ export class BeerMile extends Component {
 	getRunnerDetails() {
 		//get runners here so we can pass to any other places that need it
 		model.get(['runnersList','length']).then( length => { console.log('num runners: ' + length); } );
-			// model.get(['runnersList', {from:0,to:length-1}, ['name', 'button', 'timelogs'], ['name', 'timestamp']])}).
+			// model.get(['runnersList', {from:0,to:length-1}, ['name', 'button', 'timelogs'], ['id','name', 'timestamp']])}).
 			// 	then( json => {
 			// 		if(json === undefined) {
 			// 			console.log('no runners found');
@@ -71,7 +71,7 @@ export class BeerMile extends Component {
 			{
 				id: 12,
 				name: "Matt",
-				button: {name:"poopbags"},
+				button: {id:1, name:"poopbags"},
 				timelogs: [
 					{timestamp:new Date("2017-07-21 18:30:12")},
 					{timestamp:new Date("2017-07-21 18:31:41")},
@@ -80,7 +80,7 @@ export class BeerMile extends Component {
 			}, {
 				id: 23,
 				name: "Mike",
-				button: {name:"dang"},
+				button: {id:2, name:"dang"},
 				timelogs: [
 					{timestamp:new Date("2017-07-21 18:30:32")},
 					{timestamp:new Date("2017-07-21 18:32:56")},
@@ -90,7 +90,7 @@ export class BeerMile extends Component {
 			}, {
 				id: 24,
 				name: "TC",
-				button: {name:"stupid"},
+				button: {id:3, name:"stupid"},
 				timelogs: [
 					{timestamp:new Date("2017-07-21 18:30:02")},
 					{timestamp:new Date("2017-07-21 18:35:53")}
@@ -98,7 +98,7 @@ export class BeerMile extends Component {
 			}, {
 				id: 25,
 				name: "Jay",
-				button: {name:"poof"},
+				button: {id:4, name:"poof"},
 				timelogs: [
 					{timestamp:new Date("2017-07-21 18:30:32")},
 					{timestamp:new Date("2017-07-21 18:32:56")},
@@ -108,7 +108,7 @@ export class BeerMile extends Component {
 			}, {
 				id: 26,
 				name: "Caroline",
-				button: {name:"milk baby"},
+				button: {id:5, name:"milk baby"},
 				timelogs: [
 					{timestamp:new Date("2017-07-21 18:30:32")},
 					{timestamp:new Date("2017-07-21 18:32:56")},
@@ -120,7 +120,7 @@ export class BeerMile extends Component {
 			}, {
 				id: 27,
 				name: "JR",
-				button: {name:"bai"},
+				button: {id:6, name:"bai"},
 				timelogs: [
 					{timestamp:new Date("2017-07-21 18:30:32")},
 					{timestamp:new Date("2017-07-21 18:31:56")},

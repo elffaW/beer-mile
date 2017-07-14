@@ -62,12 +62,12 @@ module.exports = {
 	loadData: () => {
 		console.log('loading data');
 		return new Promise(function(resolve, reject) {
-			var buttonFile = './db/data/button.json';
+			var buttonFile = './app/db/data/button.json';
 			var buttonObj = JSON.parse(fs.readFileSync(buttonFile, 'utf8'));
 			db.button.bulkCreate( buttonObj ).
 				then(function(buttonsDone) {
 					console.log(`Buttons loaded: ${JSON.stringify(buttonsDone,null,2)}`);
-					var runnerFile = './db/data/runner.json';
+					var runnerFile = './app/db/data/runner.json';
 					var runnerObj = JSON.parse(fs.readFileSync(runnerFile, 'utf8'));
 					db.runner.bulkCreate( runnerObj ).
 						then(function(runnersDone) {
@@ -86,13 +86,41 @@ module.exports = {
 		});
 	},
 
+	/* takes a runner id and button id and links them */
+	setButtonForRunner(runnerId, buttonId) {
+		db.runner.findOne({
+			where: { id: {$eq: runnerId}}
+		}).
+		then(runner => {
+			db.button.findOne({
+				where: { id: {$eq: buttonId}}
+			}).
+			then(button => {
+				runner.setButton(button).
+					then(done => {
+						resolve(`Runner ${runner.name} and Button ${button.name} now linked.`);
+					}).
+					catch(err => {
+						reject(err);
+					});
+			}).
+			catch(err => {
+				reject(err);
+			});
+		}).
+		catch(err => {
+			reject(err);
+		});
+	}
+
+	/* returns a count of runners in the database (who have buttons associated to them) */
 	getRunnerCount: () => {
 		return new Promise(function(resolve, reject) {
 			db.runner.findAndCountAll({
 				where: { button_id: { $ne: null } }
 			}).
-			then(count => {
-				resolve(count);
+			then(runners => {
+				resolve(runners.count);
 			}).
 			catch(err => {
 				reject(err);

@@ -27,7 +27,7 @@ let routes = [
 	},
 	{
 		// model.get(['runnersList', {from:0,to:length-1}, ['id','name', 'button', 'timelogs'], ['id','name', 'timestamp']])}).
-		route: 'runnersList[{integers:indices}]["id","name","button","timelogs"]["id","name","timestamp"]',
+		route: 'runnersList[{integers:indices}]["id","name","button","timelog"]["id","name","timestamp"]',
 		get(pathSet) {
 			console.log('hit runners route');
 			console.log(JSON.stringify(pathSet,null,2));

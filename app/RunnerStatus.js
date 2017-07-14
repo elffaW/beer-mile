@@ -129,21 +129,25 @@ export class RunnerStatus extends Component {
 	}
 
 	render() {
+		let firstCheckin = new Date();	//default in case there are no runners
 		let runnerStatuses = [];
 		let idx = 0;
-		this.props.runners.forEach(runner => {
-			let color = runner.timelogs.length === 9 ? 'black' : COLORS[idx % COLORS.length];
-			runnerStatuses.push(
-				<RunnerRow runner={runner}
-						   color={color} />
-			);
-			idx = idx + 1;
-		});
-		
+		if(this.props.runners !== undefined) {
+			this.props.runners.forEach(runner => {
+				let color = runner.timelogs.length === 9 ? 'black' : COLORS[idx % COLORS.length];
+				runnerStatuses.push(
+					<RunnerRow runner={runner}
+							   color={color} />
+				);
+				idx = idx + 1;
+			});
+			firstCheckin = this.props.runners[0].timelogs[0].timestamp;
+		}
+			
 		return (
 			<Segment>
 				<Grid columns={2} padded verticalAlign="top">
-					<ElapsedTime firstCheckin={this.props.runners[0].timelogs[0].timestamp} />
+					<ElapsedTime firstCheckin={firstCheckin} />
 					{runnerStatuses}
 				</Grid>
 			</Segment>

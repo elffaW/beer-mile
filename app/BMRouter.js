@@ -41,27 +41,33 @@ let routes = [
 			return new Promise(function(resolve, reject) {
 				let retVal = [];
 
-				for(let i in pathSet.indices) {
-					let idx = pathSet.indices[i];
-
-					db.getAllRunners().
-						then(function(runners) {
-							console.log('retrieved runners from db: ' + JSON.stringify(runners,null,2));
-							for(let r in runners) {
-								let runner = runners[r];
-								retVal.push( { path: [ 'runnersList', idx ], value: $ref('runnersById', runner.id) });
-								retVal.push( { path: [ 'runnersList', idx, 'button' ], value: $ref('buttonsById', runner.button.id) });
-								retVal.push( { path: [ 'runnersList', idx, 'timelog' ], value: $atom(runner.timelogs) });
+				//we're just ignoring the indices and getting them all... should be ok...
+				db.getAllRunners().
+					then(function(runners) {
+						console.log('retrieved runners from db: ' + JSON.stringify(runners,null,2));
+						for(let r in runners) {
+							let runner = runners[r];
+							retVal.push( { path: [ 'runnersList', r ], value: $ref('runnersById', runner.id) });
+							// retVal.push( { path: [ 'runnersList', r, 'button' ], value: $ref('buttonsById', runner.button.id) });
+							// retVal.push( { path: [ 'runnersList', r, 'timelog' ], value: $atom(runner.timelogs) });
+							retVal.push( { path: [ 'runnersList', r, 'button', 'id' ], value: runner.button.id });
+							retVal.push( { path: [ 'runnersList', r, 'button', 'name' ], value: runner.button.name });
+							let timelogs = [];
+							for(let t in runner.button.timelog) {
+								let time = runner.button.timelog[t];
+								timelogs.push(time);
 							}
-							
-						}).
-						catch(function(err) {
-							console.log('error retrieving runner from db: ' + JSON.stringify(err,null,2));
-							reject(err);
-						});
-				}
-
-				resolve(retVal);
+							retVal.push( { path: [ 'runnersList', r, 'timelog' ], value: $atom(timelogs) });
+						}
+						console.log('runnersList retVal: ' + JSON.stringify(retVal));
+						resolve(retVal);
+					}).
+					catch(function(err) {
+						console.log('error retrieving runner from db: ' + JSON.stringify(err,null,2));
+						reject(err);
+					});
+			
+				
 			});
 		}
 	},

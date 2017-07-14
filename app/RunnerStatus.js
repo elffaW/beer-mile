@@ -25,7 +25,7 @@ model.get(['thingsById', thingId, 'thingParam']).
 import { Header, Progress, Grid, Segment, Icon } from 'semantic-ui-react';
 
 //helper statics
-const COLORS = [ 'red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'grey', 'black' ];
+const COLORS = [ 'red', 'violet', 'yellow', 'brown', 'green', 'blue', 'purple', 'orange', 'pink', 'olive', 'grey', 'teal' ];
 const PERCENT_COMPLETE = {
 	1: { percent:0, message: "Drinking beer 1!" },	//start
 	2: { percent:5, message: "Running Lap 1!" },	//finish beer 1
@@ -98,7 +98,7 @@ class RunnerRow extends Component {
 		//assumption that timelogs are in order is probably false... should sort first
 		let elapsedTime = Math.abs(this.props.runner.timelogs[numCheckpoints-1].timestamp.getTime() - this.props.runner.timelogs[0].timestamp.getTime());
 		let progressMsg = progress.message + ' (last checkpoint at ' + msToTime(elapsedTime) + ')';	//add time of last checkpoint
-
+		progressMsg = numCheckpoints === 9 ? progress.message + ' (FINAL TIME: ' + msToTime(elapsedTime) + ')' : progressMsg;
 		return (
 			<Grid.Row>
 				<Grid.Column width={2}>
@@ -122,66 +122,20 @@ class RunnerRow extends Component {
 export class RunnerStatus extends Component {
 	constructor() {
 		super();
-		this.state = { runners: [] };
 	}
 
 	componentWillMount() {
-		model.get(['runnersList','length']).then( length => { console.log('num runners: ' + length); } );
-			// model.get(['runnersList', {from:0,to:length-1}, ['name', 'button', 'timelogs'], ['name', 'timestamp']])}).
-			// 	then( json => {
-			// 		if(json === undefined) {
-			// 			console.log('no runners found');
-			// 			return;
-			// 		}
-			// 		let runnersList = json['runnersList'];
-			// 		let runners = [];
-			// 		for(let r in runnersList) {
-			// 			console.log(runnersList[r]);
-			// 			runners.push(runnersList[r]);
-			// 		}
-			// 		this.setState({ runners:runners});
-			// 	});
 		
-		let runners = [
-			{
-				id: 12,
-				name: "Matt",
-				button: {name:"poopbags"},
-				timelogs: [
-					{timestamp:new Date("2017-07-21 18:30:12")},
-					{timestamp:new Date("2017-07-21 18:31:41")},
-					{timestamp:new Date("2017-07-21 18:34:52")}
-				]
-			}, {
-				id: 23,
-				name: "Mike",
-				button: {name:"dang"},
-				timelogs: [
-					{timestamp:new Date("2017-07-21 18:30:32")},
-					{timestamp:new Date("2017-07-21 18:32:56")},
-					{timestamp:new Date("2017-07-21 18:35:11")},
-					{timestamp:new Date("2017-07-21 18:36:01")}
-				]
-			}, {
-				id: 24,
-				name: "TC",
-				button: {name:"stupid"},
-				timelogs: [
-					{timestamp:new Date("2017-07-21 18:30:02")},
-					{timestamp:new Date("2017-07-21 18:35:53")}
-				]
-			}
-		];
-		this.setState({runners:runners});
 	}
 
 	render() {
 		let runnerStatuses = [];
 		let idx = 0;
-		this.state.runners.forEach(runner => {
+		this.props.runners.forEach(runner => {
+			let color = runner.timelogs.length === 9 ? 'black' : COLORS[idx % COLORS.length];
 			runnerStatuses.push(
 				<RunnerRow runner={runner}
-						   color={COLORS[idx % COLORS.length]} />
+						   color={color} />
 			);
 			idx = idx + 1;
 		});
@@ -189,7 +143,7 @@ export class RunnerStatus extends Component {
 		return (
 			<Segment>
 				<Grid columns={2} padded verticalAlign="top">
-					<ElapsedTime firstCheckin={this.state.runners[0].timelogs[0].timestamp} />
+					<ElapsedTime firstCheckin={this.props.runners[0].timelogs[0].timestamp} />
 					{runnerStatuses}
 				</Grid>
 			</Segment>

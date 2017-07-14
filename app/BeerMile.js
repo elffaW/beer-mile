@@ -42,11 +42,99 @@ export class BeerMile extends Component {
 	}
 
 	componentWillMount() {
-		
+		this.getRunnerDetails();
 	}
 
 	handleRunnerCheckpoint(update) {
+		this.getRunnerDetails();
+	}
+
+	getRunnerDetails() {
+		//get runners here so we can pass to any other places that need it
+		model.get(['runnersList','length']).then( length => { console.log('num runners: ' + length); } );
+			// model.get(['runnersList', {from:0,to:length-1}, ['name', 'button', 'timelogs'], ['name', 'timestamp']])}).
+			// 	then( json => {
+			// 		if(json === undefined) {
+			// 			console.log('no runners found');
+			// 			return;
+			// 		}
+			// 		let runnersList = json['runnersList'];
+			// 		let runners = [];
+			// 		for(let r in runnersList) {
+			// 			console.log(runnersList[r]);
+			// 			runners.push(runnersList[r]);
+			// 		}
+			// 		this.setState({ runners:runners});
+			// 	});
 		
+		let runners = [
+			{
+				id: 12,
+				name: "Matt",
+				button: {name:"poopbags"},
+				timelogs: [
+					{timestamp:new Date("2017-07-21 18:30:12")},
+					{timestamp:new Date("2017-07-21 18:31:41")},
+					{timestamp:new Date("2017-07-21 18:34:52")}
+				]
+			}, {
+				id: 23,
+				name: "Mike",
+				button: {name:"dang"},
+				timelogs: [
+					{timestamp:new Date("2017-07-21 18:30:32")},
+					{timestamp:new Date("2017-07-21 18:32:56")},
+					{timestamp:new Date("2017-07-21 18:35:11")},
+					{timestamp:new Date("2017-07-21 18:36:01")}
+				]
+			}, {
+				id: 24,
+				name: "TC",
+				button: {name:"stupid"},
+				timelogs: [
+					{timestamp:new Date("2017-07-21 18:30:02")},
+					{timestamp:new Date("2017-07-21 18:35:53")}
+				]
+			}, {
+				id: 25,
+				name: "Jay",
+				button: {name:"poof"},
+				timelogs: [
+					{timestamp:new Date("2017-07-21 18:30:32")},
+					{timestamp:new Date("2017-07-21 18:32:56")},
+					{timestamp:new Date("2017-07-21 18:35:11")},
+					{timestamp:new Date("2017-07-21 18:36:01")}
+				]
+			}, {
+				id: 26,
+				name: "Caroline",
+				button: {name:"milk baby"},
+				timelogs: [
+					{timestamp:new Date("2017-07-21 18:30:32")},
+					{timestamp:new Date("2017-07-21 18:32:56")},
+					{timestamp:new Date("2017-07-21 18:35:11")},
+					{timestamp:new Date("2017-07-21 18:37:56")},
+					{timestamp:new Date("2017-07-21 18:38:11")},
+					{timestamp:new Date("2017-07-21 18:39:01")}
+				]
+			}, {
+				id: 27,
+				name: "JR",
+				button: {name:"bai"},
+				timelogs: [
+					{timestamp:new Date("2017-07-21 18:30:32")},
+					{timestamp:new Date("2017-07-21 18:31:56")},
+					{timestamp:new Date("2017-07-21 18:32:11")},
+					{timestamp:new Date("2017-07-21 18:33:56")},
+					{timestamp:new Date("2017-07-21 18:34:11")},
+					{timestamp:new Date("2017-07-21 18:35:56")},
+					{timestamp:new Date("2017-07-21 18:36:11")},
+					{timestamp:new Date("2017-07-21 18:37:11")},
+					{timestamp:new Date("2017-07-21 18:39:01")}
+				]
+			}
+		];
+		this.setState({runners:runners});
 	}
 
 	render() {
@@ -60,7 +148,7 @@ export class BeerMile extends Component {
 						Free t-shirts provided by TC. Who loses.
 					</Header.Subheader>
 				</Header>
-				<RunnerStatus />
+				<RunnerStatus runners={this.state.runners}/>
 			</div>
 		);
 	}

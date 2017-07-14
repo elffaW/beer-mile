@@ -53,16 +53,34 @@ function msToTime(millis) {
 class ElapsedTime extends Component {
 	constructor() {
 		super();
+		this.state = {
+			curTime:''
+		};
+	}
+
+	componentWillMount() {
+		this.getCurTime();
+	}
+
+	componentDidMount() {
+		window.setInterval(function() {
+			this.getCurTime();
+		}.bind(this), 1000);
+	}
+
+	getCurTime() {
+		let curTime = Math.abs(new Date().getTime() - this.props.firstCheckin.getTime());
+
+		this.setState({curTime:msToTime(curTime)});
 	}
 
 	render() {
 		//calculate elapsed time from start (now minus first check-in of first runner [good enough])
-		let curTime = Math.abs(new Date().getTime() - this.props.firstCheckin.getTime());
-		curTime = msToTime(curTime);
+		
 		return (
 			<Grid.Row>
 				<Header inverted textAlign="center" as='h3' icon>
-					Elapsed Time: {curTime}
+					Elapsed Time: {this.state.curTime}
 				</Header>
 			</Grid.Row>
 		);

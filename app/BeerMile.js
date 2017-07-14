@@ -54,7 +54,7 @@ export class BeerMile extends Component {
 		model.getValue(['runnersList','length']).then( length => { 
 			model.get(['runnersList', {from:0,to:length-1}, ['id','name', 'button', 'timelog'], ['id','name', 'timestamp']]).
 				then( json => {
-					console.log('returned from model gets');
+					console.log('returned from getting runners');
 					console.log('Found ' + length + ' runners');
 					console.log(JSON.stringify(json,null,2));
 					if(json === undefined) {

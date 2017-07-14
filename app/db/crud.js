@@ -111,7 +111,7 @@ module.exports = {
 		catch(err => {
 			reject(err);
 		});
-	}
+	},
 
 	/* returns a count of runners in the database (who have buttons associated to them) */
 	getRunnerCount: () => {

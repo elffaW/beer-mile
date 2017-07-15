@@ -96,13 +96,17 @@ class RunnerRow extends Component {
 	render() {
 		
 		let numCheckpoints = this.props.runner.timelog.length;
+		console.log('numCheckpoints: ' + numCheckpoints);
 		let progress = PERCENT_COMPLETE[numCheckpoints];
 		let progressMsg = 'Not even started!';
 		//assumption that timelogs are in order is probably false... should sort first
-		if(numCheckpoints > 0) {
-			let elapsedTime = Math.abs(this.props.runner.timelog[numCheckpoints-1].timestamp.getTime() - this.props.runner.timelog[0].timestamp.getTime());
+		if(numCheckpoints > 0 && numCheckpoints < PERCENT_COMPLETE.length) {
+			let elapsedTime = Math.abs(new Date(this.props.runner.timelog[numCheckpoints-1].timestamp).getTime() - new Date(this.props.runner.timelog[0].timestamp).getTime());
 			progressMsg = progress.message + ' (last checkpoint at ' + msToTime(elapsedTime) + ')';	//add time of last checkpoint
 			progressMsg = numCheckpoints === 9 ? progress.message + ' (FINAL TIME: ' + msToTime(elapsedTime) + ')' : progressMsg;
+		} else if(numCheckpoints > PERCENT_COMPLETE.length) {
+			let elapsedTime = Math.abs(new Date(this.props.runner.timelog[9].timestamp).getTime() - new Date(this.props.runner.timelog[0].timestamp).getTime());
+			progressMsg = 'Finished! (FINAL TIME: ' + msToTime(elapsedTime) + ')';
 		}
 		return (
 			<Grid.Row>

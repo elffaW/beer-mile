@@ -95,9 +95,13 @@ db.dbConnection.sync({force:false}).
 				dash.on("detected", function (dash_mac){
 				    //insert a new timestamp into the DB
 				    console.log(`Detected button with MAC [${dash_mac}], inserting timestamp into DB [${new Date()}]`);
-				    crud.insertTimestamp(dash_mac, new Date());
-					//TODO add socket emit to notify frontend to update (event "runnerCheckpoint")
-
+				    crud.insertTimestamp(dash_mac, new Date()).
+						then(function(buttonStamp) {
+							// socket emit to notify frontend to update (event "runnerCheckpoint")
+							console.log('button timestamp recorded, emit over sockets');
+							console.log(JSON.stringify(buttonStamp,null,2));
+							io.emit('runnerCheckpoint', buttonStamp);
+						});
 				});
 
 			}).catch(function(err) {

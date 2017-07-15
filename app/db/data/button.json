@@ -53,5 +53,20 @@
 	}, {
 		"name": "SKYN",
 		"mac": "68:54:fd:51:f5:31"
+	}, {
+		"name": "simplehuman",
+		"mac": ""
+	}
+	}, {
+		"name": "QUEST",
+		"mac": ""
+	}
+	}, {
+		"name": "Emergen-C",
+		"mac": ""
+	}
+	}, {
+		"name": "Litter Genie",
+		"mac": ""
 	}
 ]

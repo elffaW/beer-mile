@@ -46,6 +46,8 @@ export class BeerMile extends Component {
 	}
 
 	handleRunnerCheckpoint(update) {
+		console.log('got socket emission: ' + JSON.stringify(update,null,2));
+		model.invalidate('runnersList');
 		this.getRunnerDetails();
 	}
 

@@ -37,14 +37,14 @@ let routes = [
 			  [ "id","name","timestamp"]
 			]
 			*/
-			console.log('hit runners route');
+			//console.log('hit runners route');
 			return new Promise(function(resolve, reject) {
 				let retVal = [];
 
 				//we're just ignoring the indices and getting them all... should be ok...
 				db.getAllRunners().
 					then(function(runners) {
-						console.log('retrieved runners from db: ' + JSON.stringify(runners,null,2));
+						//console.log('retrieved runners from db: ' + JSON.stringify(runners,null,2));
 						for(let r in runners) {
 							let runner = runners[r];
 							// retVal.push( { path: [ 'runnersList', r ], value: $ref(['runnersById', runner.id]) });
@@ -55,13 +55,15 @@ let routes = [
 							retVal.push( { path: [ 'runnersList', r, 'button', 'id' ], value: runner.button.id });
 							retVal.push( { path: [ 'runnersList', r, 'button', 'name' ], value: runner.button.name });
 							let timelogs = [];
-							for(let t in runner.button.timelog) {
-								let time = runner.button.timelog[t];
+							for(let t in runner.button.timelogs) {
+								let time = runner.button.timelogs[t];
 								timelogs.push(time);
+								console.log('found a timelog: ' + JSON.stringify(time,null,2));
 							}
+							console.log('found ' + timelogs.length + ' timestamps for ' + runner.name);
 							retVal.push( { path: [ 'runnersList', r, 'timelog' ], value: $atom(timelogs) });
 						}
-						console.log('runnersList retVal: ' + JSON.stringify(retVal,null,2));
+						//console.log('runnersList retVal: ' + JSON.stringify(retVal,null,2));
 						resolve(retVal);
 					}).
 					catch(function(err) {

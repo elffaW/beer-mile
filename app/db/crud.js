@@ -44,7 +44,7 @@ module.exports = {
 				then(function(timelog) {
 					timelog.setButton(button).	//link it to the button
 						then(function(done) {
-							resolve(done);
+							resolve({'timestamp':timelog.timestamp, 'buttonId':button.id});
 						}).
 						catch(function(err) {
 							reject(err);

@@ -9,9 +9,9 @@ db.dbConnection.sync({force:true}).
 			then(function(done) {
 				console.log('Data loaded, testing with runner count');
 
-				crud.getRunnerCount().
+				crud.getAllRunners().
 					then(function(count) {
-						console.log('Number of runners in DB: ' + JSON.stringify(count,null,2));
+						console.log('Runners in DB: ' + JSON.stringify(count,null,2));
 					}).
 					catch(function(err) {
 						console.error('Test failed, cannot get runner count');

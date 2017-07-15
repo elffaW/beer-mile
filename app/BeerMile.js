@@ -61,7 +61,7 @@ export class BeerMile extends Component {
 						console.log('no runners found');
 						return;
 					}
-					let runnersList = json['jsonGraph']['runnersList'];
+					let runnersList = json['json']['runnersList'];
 					let runners = [];
 					for(let r in runnersList) {
 						console.log(runnersList[r]);

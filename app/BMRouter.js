@@ -47,7 +47,9 @@ let routes = [
 						console.log('retrieved runners from db: ' + JSON.stringify(runners,null,2));
 						for(let r in runners) {
 							let runner = runners[r];
-							retVal.push( { path: [ 'runnersList', r ], value: $ref(['runnersById', runner.id]) });
+							// retVal.push( { path: [ 'runnersList', r ], value: $ref(['runnersById', runner.id]) });
+							retVal.push( { path: [ 'runnersList', r, 'id' ] , value: runner.id }); 
+							retVal.push( { path: [ 'runnersList', r, 'name' ] , value: runner.name }); 
 							// retVal.push( { path: [ 'runnersList', r, 'button' ], value: $ref(['buttonsById', runner.button.id]) });
 							// retVal.push( { path: [ 'runnersList', r, 'timelog' ], value: $atom(runner.timelogs) });
 							retVal.push( { path: [ 'runnersList', r, 'button', 'id' ], value: runner.button.id });

@@ -27,6 +27,7 @@ import { Header, Progress, Grid, Segment, Icon } from 'semantic-ui-react';
 //helper statics
 const COLORS = [ 'red', 'violet', 'yellow', 'brown', 'green', 'blue', 'purple', 'orange', 'pink', 'olive', 'grey', 'teal' ];
 const PERCENT_COMPLETE = {
+	0: { percent:0, message: "Not even started!" },	//pre-start
 	1: { percent:0, message: "Drinking beer 1!" },	//start
 	2: { percent:5, message: "Running Lap 1!" },	//finish beer 1
 	3: { percent:25, message: "Drinking beer 2!" },	//finish lap 1
@@ -93,12 +94,16 @@ class RunnerRow extends Component {
 	}
 
 	render() {
-		let numCheckpoints = this.props.runner.timelogs.length;
+		
+		let numCheckpoints = this.props.runner.timelog.length;
 		let progress = PERCENT_COMPLETE[numCheckpoints];
+		let progressMsg = 'Not even started!';
 		//assumption that timelogs are in order is probably false... should sort first
-		let elapsedTime = Math.abs(this.props.runner.timelogs[numCheckpoints-1].timestamp.getTime() - this.props.runner.timelogs[0].timestamp.getTime());
-		let progressMsg = progress.message + ' (last checkpoint at ' + msToTime(elapsedTime) + ')';	//add time of last checkpoint
-		progressMsg = numCheckpoints === 9 ? progress.message + ' (FINAL TIME: ' + msToTime(elapsedTime) + ')' : progressMsg;
+		if(numCheckpoints > 0) {
+			let elapsedTime = Math.abs(this.props.runner.timelog[numCheckpoints-1].timestamp.getTime() - this.props.runner.timelog[0].timestamp.getTime());
+			progressMsg = progress.message + ' (last checkpoint at ' + msToTime(elapsedTime) + ')';	//add time of last checkpoint
+			progressMsg = numCheckpoints === 9 ? progress.message + ' (FINAL TIME: ' + msToTime(elapsedTime) + ')' : progressMsg;
+		}
 		return (
 			<Grid.Row>
 				<Grid.Column width={2}>
@@ -134,14 +139,16 @@ export class RunnerStatus extends Component {
 		let idx = 0;
 		if(this.props.runners !== undefined) {
 			this.props.runners.forEach(runner => {
-				let color = runner.timelogs.length === 9 ? 'black' : COLORS[idx % COLORS.length];
+				let color = runner.timelog.length === 9 ? 'black' : COLORS[idx % COLORS.length];
 				runnerStatuses.push(
 					<RunnerRow runner={runner}
 							   color={color} />
 				);
 				idx = idx + 1;
 			});
-			firstCheckin = this.props.runners[0].timelogs[0].timestamp;
+			if(this.props.runners[0].timelog[0]) {
+				firstCheckin = this.props.runners[0].timelog[0].timestamp;
+			}
 		}
 			
 		return (

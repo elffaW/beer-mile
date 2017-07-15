@@ -97,17 +97,20 @@ class RunnerRow extends Component {
 		
 		let numCheckpoints = this.props.runner.timelog.length;
 		console.log('numCheckpoints: ' + numCheckpoints);
-		let progress = PERCENT_COMPLETE[numCheckpoints];
-		let progressMsg = 'Not even started!';
+		let progressMsg = '';
+		let percent = 0;
 		//assumption that timelogs are in order is probably false... should sort first
-		if(numCheckpoints > 0 && numCheckpoints < PERCENT_COMPLETE.length) {
+		if(numCheckpoints > 0 && numCheckpoints <= 9) {
 			let elapsedTime = Math.abs(new Date(this.props.runner.timelog[numCheckpoints-1].timestamp).getTime() - new Date(this.props.runner.timelog[0].timestamp).getTime());
-			progressMsg = progress.message + ' (last checkpoint at ' + msToTime(elapsedTime) + ')';	//add time of last checkpoint
-			progressMsg = numCheckpoints === 9 ? progress.message + ' (FINAL TIME: ' + msToTime(elapsedTime) + ')' : progressMsg;
-		} else if(numCheckpoints > PERCENT_COMPLETE.length) {
-			let elapsedTime = Math.abs(new Date(this.props.runner.timelog[9].timestamp).getTime() - new Date(this.props.runner.timelog[0].timestamp).getTime());
+			let progress = PERCENT_COMPLETE[numCheckpoints];
+			progressMsg = progress.message + ' (last checkpoint at ' + msToTime(elapsedTime) + ')';	
+			percent = progress.percent;
+		} 
+		if(numCheckpoints >= 9) {
+			let elapsedTime = Math.abs(new Date(this.props.runner.timelog[8].timestamp).getTime() - new Date(this.props.runner.timelog[0].timestamp).getTime());
 			progressMsg = 'Finished! (FINAL TIME: ' + msToTime(elapsedTime) + ')';
-		}
+			percent = 100;
+		} 
 		return (
 			<Grid.Row>
 				<Grid.Column width={2}>
@@ -119,7 +122,7 @@ class RunnerRow extends Component {
 					</Grid.Row>
 				</Grid.Column>
 				<Grid.Column width={14}>
-					<Progress percent={progress.percent} active progress inverted color={this.props.color}>
+					<Progress percent={percent} active progress inverted color={this.props.color} autoSuccess>
 						{progressMsg}
 					</Progress>
 				</Grid.Column>

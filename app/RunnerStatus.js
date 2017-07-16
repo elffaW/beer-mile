@@ -145,7 +145,11 @@ export class RunnerStatus extends Component {
 		let runnerStatuses = [];
 		let idx = 0;
 		if(this.props.runners !== undefined) {
-			this.props.runners.forEach(runner => {
+			let runners = this.props.runners;
+			runners.sort(function(a, b) {
+				return a.timelog.length < b.timelog.length;
+			});
+			runners.forEach(runner => {
 				let color = runner.timelog.length === 9 ? 'black' : COLORS[idx % COLORS.length];
 				runnerStatuses.push(
 					<RunnerRow runner={runner}

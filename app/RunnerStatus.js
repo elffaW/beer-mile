@@ -147,7 +147,7 @@ export class RunnerStatus extends Component {
 		if(this.props.runners !== undefined) {
 			let runners = this.props.runners;
 			runners.sort(function(a, b) {
-				return a.timelog.length < b.timelog.length;
+				return b.timelog.length - a.timelog.length;
 			});
 			runners.forEach(runner => {
 				let color = runner.timelog.length === 9 ? 'black' : COLORS[idx % COLORS.length];
@@ -156,10 +156,10 @@ export class RunnerStatus extends Component {
 							   color={color} />
 				);
 				idx = idx + 1;
+				if(runner.timelog.length > 0) {
+					firstCheckin = runner.timelog[0].timestamp;
+				}
 			});
-			if(this.props.runners[0].timelog[0]) {
-				firstCheckin = this.props.runners[0].timelog[0].timestamp;
-			}
 		}
 			
 		return (

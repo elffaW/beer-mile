@@ -29,15 +29,6 @@ let routes = [
 		// model.get(['runnersList', {from:0,to:length-1}, ['id','name', 'button', 'timelogs'], ['id','name', 'timestamp']])}).
 		route: 'runnersList[{integers:indices}]["id","name","button","timelog"]["id","name","timestamp"]',
 		get(pathSet) {
-			/* pathSet:
-			[
-			  "runnersList",
-			  [0:12],
-			  [ "button","id","name","timelog"],
-			  [ "id","name","timestamp"]
-			]
-			*/
-			//console.log('hit runners route');
 			return new Promise(function(resolve, reject) {
 				let retVal = [];
 

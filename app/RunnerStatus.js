@@ -3,26 +3,9 @@ import ReactDOM from 'react-dom';
 
 import falcor from 'falcor';
 import { model } from './model.js';
-/* EXAMPLE model call:
-	- model imported above
-	- get function tells falcor we want to just retrieve from the model
-	- pass in the route to what you want in the JSON graph structure representing the data
-	- model.get returns a Promise, so we handle it when it comes back if resolved with .then()
-	- if Promise is rejected (failure), we handle it with .catch()
-
-model.get(['thingsById', thingId, 'thingParam']).
-  then(function(json) {
-    if(json === undefined) { return; }
-    //do stuff with the json (set state etc)
-  }.bind(this)).	//bind this if needed inside .then function
-  catch(function(err) {
-	console.error('error retrieving thingParam from things ' + err);
-  });
-
-*/
 
 // import UI elements
-import { Header, Progress, Grid, Segment, Icon } from 'semantic-ui-react';
+import { Header, Progress, Grid, Segment } from 'semantic-ui-react';
 
 //helper statics
 const COLORS = [ 'red', 'violet', 'yellow', 'brown', 'green', 'blue', 'purple', 'orange', 'pink', 'olive', 'grey', 'teal' ];
@@ -157,7 +140,7 @@ export class RunnerStatus extends Component {
 				);
 				idx = idx + 1;
 				if(runner.timelog.length > 0) {
-					firstCheckin = runner.timelog[0].timestamp;
+					firstCheckin = new Date(runner.timelog[0].timestamp);
 				}
 			});
 		}

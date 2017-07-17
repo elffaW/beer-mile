@@ -83,11 +83,12 @@ db.dbConnection.sync({force:false}).
 				DASH_MAC_ADDRESSES = allMACs;
 
 				//below included for testing purposes
-				if(DASH_MAC_ADDRESSES.length < 1) {
-					DASH_MAC_ADDRESSES.push("68:54:fd:27:a0:ba"); // (MAC of poof button)
-				}
+//				if(DASH_MAC_ADDRESSES.length < 1) {
+//					DASH_MAC_ADDRESSES.push("68:54:fd:27:a0:ba"); // (MAC of poof button)
+//				}
 
-				var dash = dash_button(DASH_MAC_ADDRESSES, null, null, 'all');
+				var dash = dash_button(DASH_MAC_ADDRESSES, null, 3000, 'udp');
+
 
 				console.log(`Listening for presses from these MACs: [${DASH_MAC_ADDRESSES}]`);
 				console.log();

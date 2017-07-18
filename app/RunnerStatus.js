@@ -11,15 +11,11 @@ import { Header, Progress, Grid, Segment } from 'semantic-ui-react';
 const COLORS = [ 'red', 'violet', 'yellow', 'brown', 'green', 'blue', 'purple', 'orange', 'pink', 'olive', 'grey', 'teal' ];
 const PERCENT_COMPLETE = {
 	0: { percent:0, message: "Not even started!" },	//pre-start
-	1: { percent:0, message: "Drinking beer 1!" },	//start
-	2: { percent:5, message: "Running Lap 1!" },	//finish beer 1
-	3: { percent:25, message: "Drinking beer 2!" },	//finish lap 1
-	4: { percent:30, message: "Running lap 2!" },	//finish beer 2
-	5: { percent:50, message: "Drinking beer 3!" },	//finish lap 2
-	6: { percent:55, message: "Running lap 3!" },	//finish beer 3
-	7: { percent:75, message: "Drinking beer 4!" },	//finish lap 3
-	8: { percent:80, message: "Running lap 4!" },	//finish beer 4
-	9: { percent:100, message: "Finished!" }		//finish lap 4 (race over)
+	1: { percent:0, message: "Lap 1!" },	//start
+	2: { percent:25, message: "Lap 2!" },	//finish lap 1
+	3: { percent:50, message: "Lap 3!" },	//finish lap 2
+	4: { percent:75, message: "Lap 4!" },	//finish lap 3
+	5: { percent:100, message: "Finished!" },	//finish lap 4 (done)
 }
 
 /* format milliseconds as minutes:seconds 
@@ -83,14 +79,14 @@ class RunnerRow extends Component {
 		let progressMsg = '';
 		let percent = 0;
 		//assumption that timelogs are in order is probably false... should sort first
-		if(numCheckpoints > 0 && numCheckpoints <= 9) {
+		if(numCheckpoints > 0 && numCheckpoints <= 5) {
 			let elapsedTime = Math.abs(new Date(this.props.runner.timelog[numCheckpoints-1].timestamp).getTime() - new Date(this.props.runner.timelog[0].timestamp).getTime());
 			let progress = PERCENT_COMPLETE[numCheckpoints];
 			progressMsg = progress.message + ' (last checkpoint at ' + msToTime(elapsedTime) + ')';	
 			percent = progress.percent;
 		} 
-		if(numCheckpoints >= 9) {
-			let elapsedTime = Math.abs(new Date(this.props.runner.timelog[8].timestamp).getTime() - new Date(this.props.runner.timelog[0].timestamp).getTime());
+		if(numCheckpoints >= 5) {
+			let elapsedTime = Math.abs(new Date(this.props.runner.timelog[4].timestamp).getTime() - new Date(this.props.runner.timelog[0].timestamp).getTime());
 			progressMsg = 'Finished! (FINAL TIME: ' + msToTime(elapsedTime) + ')';
 			percent = 100;
 		} 
@@ -133,7 +129,7 @@ export class RunnerStatus extends Component {
 				return b.timelog.length - a.timelog.length;
 			});
 			runners.forEach(runner => {
-				let color = runner.timelog.length === 9 ? 'black' : COLORS[idx % COLORS.length];
+				let color = runner.timelog.length >= 5 ? 'black' : COLORS[idx % COLORS.length];
 				runnerStatuses.push(
 					<RunnerRow runner={runner}
 							   color={color} />

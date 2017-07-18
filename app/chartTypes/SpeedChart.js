@@ -4,7 +4,6 @@ import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel, Vict
 
 import { cleanData } from './chartData/frontEndData.js';
 import {speedDataforIndividual} from './chartData/lapSpeedData.js';
-import {rateDataforIndividual}  from './chartData/lapChugData.js';
 import { getMax, percentifyData } from './helpers/helperFunctions';
 import { getStyles } from './helpers/chartStyles';
 
@@ -14,7 +13,6 @@ export default class SpeedChart extends React.Component {
   constructor() {
     super();
     this.state = { lapSpeedData:[],
-                   lapChugData:[],
                    person:"MIKE" };
   }
 
@@ -26,15 +24,12 @@ export default class SpeedChart extends React.Component {
     let frontEndData = cleanData(nextProps.runners);
 
     const lapSpeedData = speedDataforIndividual(this.state.person, frontEndData);
-    const lapChugData = rateDataforIndividual(this.state.person, frontEndData);
-
-    this.setState({ lapSpeedData:lapSpeedData,
-                    lapChugData:lapChugData });
+    
+    this.setState({ lapSpeedData:lapSpeedData });
   }
 
   render() {
     const maxSpeed = getMax(this.state.lapSpeedData, "speed",5);
-    const maxChugRate = getMax(this.state.lapChugData, "rate", 10);
     return (
       
       <svg viewBox="0 0 400 400" >
@@ -52,7 +47,7 @@ export default class SpeedChart extends React.Component {
             textAnchor ="middle"
           />
         
-          {/* Shared X-Axis */}
+          {/* X-Axis */}
           <VictoryAxis
             tickValues={[1, 2, 3, 4]}
             tickFormat={["Lap 1", "Lap 2", "Lap 3", "Lap 4"]}
@@ -64,29 +59,8 @@ export default class SpeedChart extends React.Component {
                 dx={-20}/>  
             } 
           />
-          
-          {/* Left Y-Axis [LAP CHUG RATE] */}
-          <VictoryBar
-            data={percentifyData(this.state.lapChugData, "lap", "rate", 10)}
-            x="lap"
-            y="rate"
-            style={styles.barStyleA}
-            animate={{
-              duration: 2000,
-              onLoad: { duration: 2000 }
-            }}
-            //labels={(d) => `${d.y}`}
-            
-          />
-          <VictoryAxis
-            dependentAxis
-            orientation="left"
-            standalone={false}
-            tickFormat={(x) => (`${Math.ceil(x * maxChugRate/.5)*.5} oz/min`)}
-            style={{ tickLabels: { fill: "tomato" } }}
-          />
-          
-          {/* Right Y-Axis [LAP RUN SPEED] */}
+
+          {/* Y-Axis [LAP RUN SPEED] */}
           <VictoryLine
               data={percentifyData(this.state.lapSpeedData, "lap", "speed", 5)}
               x="lap"
@@ -101,7 +75,7 @@ export default class SpeedChart extends React.Component {
           />
           <VictoryAxis 
               dependentAxis
-              orientation="right"
+              orientation="left"
               standalone={false}
               tickFormat={(x) => (`${Math.ceil(x * maxSpeed/.5)*.5} mph`)}
               style={{ tickLabels: { fill: "#f1da33" } }}

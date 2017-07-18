@@ -5,8 +5,10 @@ function TotalTime (x, y) {
 
 export function LeaderBoard (data) {
   var mainArray = [];
+  var runArray = [];
+  var drinkArray = [];
   var sortArray = [];
-  console.log('LeaderBoard: ' + JSON.stringify(data));
+
   for (var i = 0 ; i < data.length ; i++) {
 
     sortArray.push(new TotalTime(
@@ -17,6 +19,26 @@ export function LeaderBoard (data) {
   }
   
   sortArray.sort(function(a, b){return b.y-a.y});
+
+  for (i = 0 ; i < sortArray.length ; i++) {
+    
+    for (var j = 0 ; j < data.length ; j++) {
+      
+      if (sortArray[i].x === data[j].name) {
+      
+      runArray.push(new TotalTime(
+        data[j].name, 
+        data[j].overallTime));
+        
+      drinkArray.push(new TotalTime(
+        data[j].name,
+        data[j].overallTime));
+      }
+    }
+  }
   
-  return sortArray;
+  mainArray.push(runArray,drinkArray);
+  console.log('mainArray: ' + JSON.stringify(mainArray));
+  
+  return mainArray;
 }

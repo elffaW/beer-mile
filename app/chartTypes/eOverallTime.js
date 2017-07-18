@@ -16,10 +16,10 @@ export default class eOverallChart extends React.Component {
 
   componentWillMount() {
     let frontEndData = cleanData(this.props.runners);
-    console.log('frontEndData: ' + JSON.stringify(frontEndData,null,2));
-    
+    // console.log('frontEndData: ' + JSON.stringify(frontEndData,null,2));
+
     const barData = LeaderBoard(frontEndData);
-    console.log(barData);
+    console.log('barData: ' + JSON.stringify(barData));
     
     this.setState({ barData:barData });
   }
@@ -30,10 +30,10 @@ export default class eOverallChart extends React.Component {
     }
 
     let frontEndData = cleanData(nextProps.runners);
-    console.log('frontEndData: ' + JSON.stringify(frontEndData,null,2));
+    // console.log('frontEndData: ' + JSON.stringify(frontEndData,null,2));
 
     const barData = LeaderBoard(frontEndData);
-    console.log(barData);
+    console.log('barData: ' + JSON.stringify(barData));
     
     this.setState({ barData:barData });
   }

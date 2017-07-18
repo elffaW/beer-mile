@@ -35,28 +35,38 @@ export function cleanData(data) {
     var runnersClean = [];
     
     for(var i = 0 ; i < data.length ; i++){
+    	var date0 = new Date(data[i]["timelog"][0].timestamp).getTime();
+    	var date1 = new Date(data[i]["timelog"][1].timestamp).getTime();
+    	var date2 = new Date(data[i]["timelog"][2].timestamp).getTime();
+    	var date3 = new Date(data[i]["timelog"][3].timestamp).getTime();
+    	var date4 = new Date(data[i]["timelog"][4].timestamp).getTime();
+    	var date5 = new Date(data[i]["timelog"][5].timestamp).getTime();
+    	var date6 = new Date(data[i]["timelog"][6].timestamp).getTime();
+    	var date7 = new Date(data[i]["timelog"][7].timestamp).getTime();
+    	var date8 = new Date(data[i]["timelog"][8].timestamp).getTime();
+
         var runner = new Runner(
             data[i]["name"],
             data[i]["button"],
-            (data[i]["timelog"][8].timestamp.getTime() - data[i]["timelog"][0].timestamp.getTime())/1000,
-            (data[i]["timelog"][2].timestamp.getTime() - data[i]["timelog"][1].timestamp.getTime())/1000,
-            (data[i]["timelog"][4].timestamp.getTime() - data[i]["timelog"][3].timestamp.getTime())/1000,
-            (data[i]["timelog"][6].timestamp.getTime() - data[i]["timelog"][5].timestamp.getTime())/1000,
-            (data[i]["timelog"][8].timestamp.getTime() - data[i]["timelog"][7].timestamp.getTime())/1000,
-            (data[i]["timelog"][1].timestamp.getTime() - data[i]["timelog"][0].timestamp.getTime())/1000,
-            (data[i]["timelog"][3].timestamp.getTime() - data[i]["timelog"][2].timestamp.getTime())/1000,
-            (data[i]["timelog"][5].timestamp.getTime() - data[i]["timelog"][4].timestamp.getTime())/1000,
-            (data[i]["timelog"][7].timestamp.getTime() - data[i]["timelog"][6].timestamp.getTime())/1000,
+            (date8 - date0)/1000,
+            (date2 - date1)/1000,
+            (date4 - date3)/1000,
+            (date6 - date5)/1000,
+            (date8 - date7)/1000,
+            (date1 - date0)/1000,
+            (date3 - date2)/1000,
+            (date5 - date4)/1000,
+            (date7 - date6)/1000,
             
-            (data[i]["timelog"][2].timestamp.getTime() - data[i]["timelog"][1].timestamp.getTime())/1000 +
-            (data[i]["timelog"][4].timestamp.getTime() - data[i]["timelog"][3].timestamp.getTime())/1000 +
-            (data[i]["timelog"][6].timestamp.getTime() - data[i]["timelog"][5].timestamp.getTime())/1000 +
-            (data[i]["timelog"][8].timestamp.getTime() - data[i]["timelog"][7].timestamp.getTime())/1000,
+            (date2 - date1)/1000 +
+            (date4 - date3)/1000 +
+            (date6 - date5)/1000 +
+            (date8 - date7)/1000,
             
-            (data[i]["timelog"][1].timestamp.getTime() - data[i]["timelog"][0].timestamp.getTime())/1000 +
-            (data[i]["timelog"][3].timestamp.getTime() - data[i]["timelog"][2].timestamp.getTime())/1000 +
-            (data[i]["timelog"][5].timestamp.getTime() - data[i]["timelog"][4].timestamp.getTime())/1000 +
-            (data[i]["timelog"][7].timestamp.getTime() - data[i]["timelog"][6].timestamp.getTime())/1000
+            (date1 - date0)/1000 +
+            (date3 - date2)/1000 +
+            (date5 - date4)/1000 +
+            (date7 - date6)/1000
             );
             
         runnersClean.push(runner);   

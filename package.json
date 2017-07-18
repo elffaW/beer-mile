@@ -1,6 +1,6 @@
 {
   "name": "beer-mile",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "description": "",
   "main": "server.js",
   "private": true,
@@ -42,7 +42,8 @@
     "sequelize": "^3.30.4",
     "socket.io": "^2.0.3",
     "socket.io-client": "^2.0.3",
-    "sqlite3": "^3.1.8"
+    "sqlite3": "^3.1.8",
+    "victory": "^0.21.2"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

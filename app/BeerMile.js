@@ -9,6 +9,9 @@ import { Header, Icon } from 'semantic-ui-react';
 
 import { RunnerStatus } from './RunnerStatus';
 
+import IndyLapSpeedChart from './chartTypes/SpeedChart.js';
+import OverallTimeChart from './chartTypes/eOverallTime.js';
+
 //socketio for client-server communications (incl. data update without page refresh)
 const io = require('socket.io-client');
 const socket = io();
@@ -20,7 +23,8 @@ import './styles/style.css';
 export class BeerMile extends Component {
 	constructor() {
 		super();
-		this.state = { socketMessage:'init' };
+		this.state = { socketMessage:'init',
+					   runners:[] };
 		socket.on('runnerCheckpoint', (update) => this.handleRunnerCheckpoint(update));
 	}
 
@@ -65,6 +69,8 @@ export class BeerMile extends Component {
 					</Header.Subheader>
 				</Header>
 				<RunnerStatus runners={this.state.runners}/>
+				<IndyLapSpeedChart runners={this.state.runners}/>
+				<OverallTimeChart runners={this.state.runners}/>
 			</div>
 		);
 	}

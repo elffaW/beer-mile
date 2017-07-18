@@ -1,22 +1,40 @@
 import React from 'react';
-import frontEndData from './chartData/frontEndData.js'
+
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel, VictoryLine } from 'victory';
+
+import { cleanData } from './chartData/frontEndData.js';
 import {speedDataforIndividual} from './chartData/lapSpeedData.js';
 import {rateDataforIndividual}  from './chartData/lapChugData.js';
 import { getMax, percentifyData } from './helpers/helperFunctions';
 import { getStyles } from './helpers/chartStyles';
 
-var person = "Mike"
-
-const lapSpeedData = speedDataforIndividual(person, frontEndData);
-const lapChugData = rateDataforIndividual(person, frontEndData);
-
-var maxSpeed = getMax(lapSpeedData, "speed",5);
-var maxChugRate = getMax(lapChugData, "rate", 10);
 const styles = getStyles();
 
 export default class SpeedChart extends React.Component {
+  constructor() {
+    super();
+    this.state = { lapSpeedData:[],
+                   lapChugData:[],
+                   person:"MIKE" };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.runners === this.props.runners) {
+      return;
+    }
+
+    let frontEndData = cleanData(nextProps.runners);
+
+    const lapSpeedData = speedDataforIndividual(this.state.person, frontEndData);
+    const lapChugData = rateDataforIndividual(this.state.person, frontEndData);
+
+    this.setState({ lapSpeedData:lapSpeedData,
+                    lapChugData:lapChugData });
+  }
+
   render() {
+    const maxSpeed = getMax(this.state.lapSpeedData, "speed",5);
+    const maxChugRate = getMax(this.state.lapChugData, "rate", 10);
     return (
       
       <svg viewBox="0 0 400 400" >
@@ -30,7 +48,7 @@ export default class SpeedChart extends React.Component {
           
           <VictoryLabel x={175} y={50} 
             style={styles.title}
-            text={"Lap Breakdown for " + person}
+            text={"Lap Breakdown for " + this.state.person}
             textAnchor ="middle"
           />
         
@@ -49,7 +67,7 @@ export default class SpeedChart extends React.Component {
           
           {/* Left Y-Axis [LAP CHUG RATE] */}
           <VictoryBar
-            data={percentifyData(lapChugData, "lap", "rate", 10)}
+            data={percentifyData(this.state.lapChugData, "lap", "rate", 10)}
             x="lap"
             y="rate"
             style={styles.barStyleA}
@@ -70,7 +88,7 @@ export default class SpeedChart extends React.Component {
           
           {/* Right Y-Axis [LAP RUN SPEED] */}
           <VictoryLine
-              data={percentifyData(lapSpeedData, "lap", "speed", 5)}
+              data={percentifyData(this.state.lapSpeedData, "lap", "speed", 5)}
               x="lap"
               y="speed"
               interpolation="catmullRom"

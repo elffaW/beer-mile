@@ -1,6 +1,7 @@
 import React from 'react';
-import frontEndData from './chartData/frontEndData.js';
+
 import { VictoryStack, VictoryChart, VictoryTheme, VictoryAxis, VictoryBar, VictoryGroup, VictoryLabel } from 'victory';
+import { cleanData } from './chartData/frontEndData.js';
 import { LeaderBoard } from './chartData/overallSplitTimes.js';
 //import { getMax, percentifyData } from './helpers/helperFunctions';
 import { getStyles } from './helpers/chartStyles';
@@ -8,16 +9,37 @@ import { getStyles } from './helpers/chartStyles';
 const styles = getStyles();
 
 export default class eOverallChart extends React.Component {
+  constructor() {
+    super();
+    this.state = { barData:[] };
+  }
 
-  render() {
-    
-    
+  componentWillMount() {
+    let frontEndData = cleanData(this.props.runners);
+
     const barData = LeaderBoard(frontEndData);
     console.log(barData);
     
+    this.setState({ barData:barData });
+  }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.runners === this.props.runners) {
+      return;
+    }
 
+    let frontEndData = cleanData(nextProps.runners);
 
+    const barData = LeaderBoard(frontEndData);
+    console.log(barData);
+    
+    this.setState({ barData:barData });
+  }
+
+  render() {
+    if(this.state.barData === undefined) {
+      return <p>No Charts</p>;
+    }
     return (
       <div>
         
@@ -44,7 +66,7 @@ export default class eOverallChart extends React.Component {
                     
                 }}>
   
-                  {barData.map((data, index) => {
+                  {this.state.barData.map((data, index) => {
                     return <VictoryBar  
                       key={index} 
                       data={data} 
@@ -80,7 +102,7 @@ export default class eOverallChart extends React.Component {
               <VictoryAxis
               
                 dependentAxis
-                tickValues={barData[0].map((d) =>{
+                tickValues={this.state.barData[0].map((d) =>{
                   return d.x;
                 })}
                 style={{ tickLabels: { fill: "tomato" } }}

@@ -37,7 +37,7 @@ export default class SpeedChart extends React.Component {
 
   render() {
     const maxSpeed = getMax(this.state.lapSpeedData, "speed",5);
-    // console.log(this.props.runnerSelected);
+    
     return (
       
       <svg viewBox="0 0 400 400" >

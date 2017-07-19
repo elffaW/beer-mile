@@ -3,12 +3,13 @@ function TotalTime (x, y) {
   this.y = y;
 }
 
-export function LeaderBoard (data) {
-  var mainArray = [];
-  var runArray = [];
-  var drinkArray = [];
-  var sortArray = [];
 
+export function LeaderBoard (data) {
+  //var mainArray = [];
+  //var runArray = [];
+  //var drinkArray = [];
+  var sortArray = [];
+  
   for (var i = 0 ; i < data.length ; i++) {
 
     sortArray.push(new TotalTime(
@@ -19,7 +20,8 @@ export function LeaderBoard (data) {
   }
   
   sortArray.sort(function(a, b){return b.y-a.y});
-
+  
+  /*
   for (i = 0 ; i < sortArray.length ; i++) {
     
     for (var j = 0 ; j < data.length ; j++) {
@@ -28,17 +30,19 @@ export function LeaderBoard (data) {
       
       runArray.push(new TotalTime(
         data[j].name, 
-        data[j].overallTime));
+        data[j].totalRunTime));
         
       drinkArray.push(new TotalTime(
         data[j].name,
-        data[j].overallTime));
+        data[j].totalDrinkTime));
       }
     }
   }
   
   mainArray.push(runArray,drinkArray);
-  // console.log('mainArray: ' + JSON.stringify(mainArray));
+  */
   
-  return mainArray;
+  console.log(sortArray);
+  
+  return sortArray;
 }

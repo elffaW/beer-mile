@@ -38,3 +38,19 @@ export function mphToTime (mph) {
   
 }
 
+export function SecondsToTime (sec) {
+  var minutes = Math.floor(sec/60);
+  var seconds = Math.floor(((sec/60) - Math.floor(sec/60))*60);
+  
+  if (sec === 0) {
+    return "";
+  }
+  else if (seconds < 10) {
+    seconds = "0" + seconds;
+    return minutes + ":" + seconds;
+  }
+  else {
+    return minutes + ":" + seconds;
+  }
+  
+}

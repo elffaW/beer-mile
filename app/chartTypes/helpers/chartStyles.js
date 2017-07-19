@@ -7,6 +7,9 @@ export function getStyles() {
           fill: "tomato", 
           stroke: "black", 
           strokeWidth: .5
+        },
+        labels: { 
+          fill: "#F6E77D",
         }
         
       },

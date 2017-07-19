@@ -36,6 +36,8 @@ class ElapsedTime extends Component {
 		this.state = {
 			curTime:''
 		};
+
+		
 	}
 
 	componentWillMount() {
@@ -70,12 +72,23 @@ class ElapsedTime extends Component {
 class RunnerRow extends Component {
 	constructor() {
 		super();
+
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	shouldComponentUpdate(nextProps) {
+		return (this.props.runner !== nextProps.runner);
+	}
+
+	handleClick() {
+		
+		this.props.updateRunner(this.props.runner.name);
 	}
 
 	render() {
 		
 		let numCheckpoints = this.props.runner.timelog.length;
-		console.log('numCheckpoints: ' + numCheckpoints);
+		// console.log('numCheckpoints: ' + numCheckpoints);
 		let progressMsg = '';
 		let percent = 0;
 		//assumption that timelogs are in order is probably false... should sort first
@@ -91,7 +104,7 @@ class RunnerRow extends Component {
 			percent = 100;
 		} 
 		return (
-			<Grid.Row>
+			<Grid.Row onClick={this.handleClick}>
 				<Grid.Column width={2}>
 					<Grid.Row>
 						<strong>{this.props.runner.name}</strong>
@@ -115,10 +128,6 @@ export class RunnerStatus extends Component {
 		super();
 	}
 
-	componentWillMount() {
-		
-	}
-
 	render() {
 		let firstCheckin = new Date();	//default in case there are no runners
 		let runnerStatuses = [];
@@ -132,7 +141,8 @@ export class RunnerStatus extends Component {
 				let color = runner.timelog.length >= 5 ? 'black' : COLORS[idx % COLORS.length];
 				runnerStatuses.push(
 					<RunnerRow runner={runner}
-							   color={color} />
+							   color={color}
+							   updateRunner={this.props.changeRunner} />
 				);
 				idx = idx + 1;
 				if(runner.timelog.length > 0) {
@@ -140,7 +150,7 @@ export class RunnerStatus extends Component {
 				}
 			});
 		}
-			
+
 		return (
 			<Segment>
 				<Grid columns={2} padded verticalAlign="top">

@@ -27,9 +27,7 @@ export class BeerMile extends Component {
 					   runners:[],
 					   runnerSelected: 'MIKE' };
 		socket.on('runnerCheckpoint', (update) => this.handleRunnerCheckpoint(update));
-	}
 
-	componentWillMount() {
 		this.getRunnerDetails();
 	}
 
@@ -70,10 +68,10 @@ export class BeerMile extends Component {
 					<Icon name='beer' color="yellow" bordered circular/>
 					BEER MILE 2017
 					<Header.Subheader>
-						Free t-shirts provided by TC. Who loses.
+						Free t-shirts and post-race beer provided by TC
 					</Header.Subheader>
 				</Header>
-				<RunnerStatus runners={this.state.runners}/>
+				<RunnerStatus runners={this.state.runners} changeRunner={this.changeRunner} />
 				<IndyLapSpeedChart runners={this.state.runners} runnerSelected={this.state.runnerSelected} />
 				<OverallTimeChart runners={this.state.runners} changeRunner={this.changeRunner} />
 			</div>

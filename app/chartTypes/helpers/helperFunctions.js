@@ -25,10 +25,16 @@ export function mphToTime (mph) {
   var minutes = Math.floor(60/mph);
   var seconds = Math.floor(((60/mph) - Math.floor(60/mph))*60);
   
-  if (seconds < 10) {
+  if (mph === 0) {
+    return "";
+  }
+  else if (seconds < 10) {
     seconds = "0" + seconds;
+    return minutes + ":" + seconds;
+  }
+  else {
+    return minutes + ":" + seconds;
   }
   
-  return minutes + ":" + seconds;
 }
 

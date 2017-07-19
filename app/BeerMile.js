@@ -24,7 +24,8 @@ export class BeerMile extends Component {
 	constructor() {
 		super();
 		this.state = { socketMessage:'init',
-					   runners:[] };
+					   runners:[],
+					   runnerSelected: 'MIKE' };
 		socket.on('runnerCheckpoint', (update) => this.handleRunnerCheckpoint(update));
 	}
 
@@ -35,6 +36,10 @@ export class BeerMile extends Component {
 	handleRunnerCheckpoint(update) {
 		model.invalidate('runnersList');
 		this.getRunnerDetails();
+	}
+
+	changeRunner = (runnerName) => {
+		this.setState({ runnerSelected:runnerName });
 	}
 
 	getRunnerDetails() {
@@ -52,7 +57,7 @@ export class BeerMile extends Component {
 					for(let r in runnersList) {
 						runners.push(runnersList[r]);
 					}
-					this.setState({ runners:runners});
+					this.setState({ runners:runners });
 				});
 			});
 	}
@@ -69,8 +74,8 @@ export class BeerMile extends Component {
 					</Header.Subheader>
 				</Header>
 				<RunnerStatus runners={this.state.runners}/>
-				<IndyLapSpeedChart runners={this.state.runners}/>
-				<OverallTimeChart runners={this.state.runners}/>
+				<IndyLapSpeedChart runners={this.state.runners} runnerSelected={this.state.runnerSelected} />
+				<OverallTimeChart runners={this.state.runners} changeRunner={this.changeRunner} />
 			</div>
 		);
 	}

@@ -16,11 +16,8 @@ export default class eOverallChart extends React.Component {
 
   componentWillMount() {
     let frontEndData = cleanData(this.props.runners);
-    // console.log('frontEndData: ' + JSON.stringify(frontEndData,null,2));
-
-    const barData = LeaderBoard(frontEndData);
-    console.log('barData: ' + JSON.stringify(barData));
     
+    const barData = LeaderBoard(frontEndData);
     this.setState({ barData:barData });
   }
 
@@ -30,15 +27,13 @@ export default class eOverallChart extends React.Component {
     }
 
     let frontEndData = cleanData(nextProps.runners);
-    // console.log('frontEndData: ' + JSON.stringify(frontEndData,null,2));
-
     const barData = LeaderBoard(frontEndData);
-    console.log('barData: ' + JSON.stringify(barData));
     
     this.setState({ barData:barData });
   }
 
   render() {
+
     if(this.state.barData === undefined) {
       return <p>No Charts</p>;
     }
@@ -102,11 +97,17 @@ export default class eOverallChart extends React.Component {
               </VictoryGroup>
               
               <VictoryAxis
-              
+                
                 dependentAxis
                 tickValues={this.state.barData[0].map((d) =>{
                   return d.x;
                 })}
+                tickLabelComponent={<VictoryLabel events={{
+                  onClick: (e) => {
+                    this.props.changeRunner(e.target.innerHTML);
+                    
+                  }
+                }} />}
                 style={{ tickLabels: { fill: "tomato" } }}
               />
               

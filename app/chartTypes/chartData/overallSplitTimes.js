@@ -38,7 +38,7 @@ export function LeaderBoard (data) {
   }
   
   mainArray.push(runArray,drinkArray);
-  console.log('mainArray: ' + JSON.stringify(mainArray));
+  // console.log('mainArray: ' + JSON.stringify(mainArray));
   
   return mainArray;
 }

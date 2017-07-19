@@ -5,7 +5,7 @@ function Speed (lap, speed) {
 
 export function speedDataforIndividual (name, data) {
   var speedData = [];
-  console.log('speedDataforIndividual: ' + name + ', ' + JSON.stringify(data));
+  // console.log('speedDataforIndividual: ' + name + ', ' + JSON.stringify(data));
   for (var i = 0 ; i < data.length ; i++) {
     if (name === data[i].name){
 

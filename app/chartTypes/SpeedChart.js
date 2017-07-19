@@ -12,24 +12,32 @@ const styles = getStyles();
 export default class SpeedChart extends React.Component {
   constructor() {
     super();
-    this.state = { lapSpeedData:[],
-                   person:"MIKE" };
+    this.state = { lapSpeedData:[] };
+  }
+
+  componentWillMount() {
+    let frontEndData = cleanData(this.props.runners);
+
+    const lapSpeedData = speedDataforIndividual(this.props.runnerSelected, frontEndData);
+    
+    this.setState({ lapSpeedData:lapSpeedData });
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.runners === this.props.runners) {
+    if(nextProps.runners === this.props.runners && this.props.runnerSelected === nextProps.runnerSelected) {
       return;
     }
 
     let frontEndData = cleanData(nextProps.runners);
 
-    const lapSpeedData = speedDataforIndividual(this.state.person, frontEndData);
+    const lapSpeedData = speedDataforIndividual(this.props.runnerSelected, frontEndData);
     
     this.setState({ lapSpeedData:lapSpeedData });
   }
 
   render() {
     const maxSpeed = getMax(this.state.lapSpeedData, "speed",5);
+    // console.log(this.props.runnerSelected);
     return (
       
       <svg viewBox="0 0 400 400" >
@@ -43,7 +51,7 @@ export default class SpeedChart extends React.Component {
           
           <VictoryLabel x={175} y={50} 
             style={styles.title}
-            text={"Lap Breakdown for " + this.state.person}
+            text={"Lap Breakdown for " + this.props.runnerSelected}
             textAnchor ="middle"
           />
         

@@ -4,7 +4,7 @@ import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel, Vict
 
 import { cleanData } from './chartData/frontEndData.js';
 import {speedDataforIndividual} from './chartData/lapSpeedData.js';
-import { getMax, percentifyData } from './helpers/helperFunctions';
+import { getMax, percentifyData, mphToTime } from './helpers/helperFunctions';
 import { getStyles } from './helpers/chartStyles';
 
 const styles = getStyles();
@@ -17,6 +17,7 @@ export default class SpeedChart extends React.Component {
 
   componentWillMount() {
     let frontEndData = cleanData(this.props.runners);
+    console.log(frontEndData);
 
     const lapSpeedData = speedDataforIndividual(this.props.runnerSelected, frontEndData);
     
@@ -70,12 +71,17 @@ export default class SpeedChart extends React.Component {
 
           {/* Y-Axis [LAP RUN SPEED] */}
           <VictoryLine
-              data={percentifyData(this.state.lapSpeedData, "lap", "speed", 5)}
+              data={this.state.lapSpeedData}
               x="lap"
               y="speed"
               interpolation="catmullRom"
+              labels={(d) => mphToTime(d.y)}
               style={{ 
-                data: { stroke: "#f1da33", strokeWidth: 3, strokeLinecap: "round" } }}
+                data: { stroke: "#f1da33", strokeWidth: 3, strokeLinecap: "round" }, 
+                labels: { 
+                          fill: "#F6E77D",
+                          angle: 315}
+              }}
               animate={{
                 duration: 2000,
                 onLoad: { duration: 2000 }

@@ -19,10 +19,10 @@ export function speedDataforIndividual (name, data) {
       var speed3 = lap3Time > 0 ? (factor / lap3Time) : 0;
       var speed4 = lap4Time > 0 ? (factor / lap4Time) : 0;
 
-      speedData.push(new Speed(1,speed1));
-      speedData.push(new Speed(2,speed2));
-      speedData.push(new Speed(3,speed3));
-      speedData.push(new Speed(4,speed4));
+      if (speed1 > 0) {speedData.push(new Speed(1,speed1))}
+      if (speed2 > 0) {speedData.push(new Speed(2,speed2))}
+      if (speed3 > 0) {speedData.push(new Speed(3,speed3))}
+      if (speed4 > 0) {speedData.push(new Speed(4,speed4))}
       break;
     }
   }

@@ -48,21 +48,6 @@ export default class eOverallChart extends React.Component {
           domainPadding={{ y: 20, x:20}} 
           theme={VictoryTheme.material}
           padding={{ top: 80, bottom: 80, left: 80, right: 80 }}>
-              
-            <VictoryBar 
-              horizontal
-              data={this.state.barData}
-              x="x"
-              y="y"
-              style={styles.stackBarStyleA}
-              labels={(d) => (SecondsToTime(d.y))}
-              animate={
-                {
-                  duration: 2000,
-                  onLoad: { duration: 2000 }
-                }
-              }>
-            </VictoryBar>
             
             <VictoryAxis
               dependentAxis
@@ -72,7 +57,7 @@ export default class eOverallChart extends React.Component {
                   
                 }
               }} />}
-              style={{ tickLabels: { fill: "tomato" } }}
+              style={{ tickLabels: { fill: "tomato" , fontSize:8 } }}
             />
               
             <VictoryAxis
@@ -87,6 +72,23 @@ export default class eOverallChart extends React.Component {
                   style={styles.title}/>  
               } 
             />
+
+            <VictoryBar 
+              horizontal
+              data={this.state.barData}
+              x="x"
+              y="y"
+              style={styles.barStyleA}
+              labels={(d) => (SecondsToTime(d.y))}
+              animate={
+                {
+                  duration: 2000,
+                  onLoad: { duration: 2000 }
+                }
+              }>
+            </VictoryBar>
+            
+            
           </VictoryChart>
         </svg>
       </div>

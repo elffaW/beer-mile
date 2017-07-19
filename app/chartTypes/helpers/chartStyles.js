@@ -10,6 +10,7 @@ export function getStyles() {
         },
         labels: { 
           fill: "#F6E77D",
+          fontSize: 8
         }
         
       },

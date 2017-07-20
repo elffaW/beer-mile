@@ -54,3 +54,28 @@ export function SecondsToTime (sec) {
   }
   
 }
+
+export function groupLapAvg (data) {
+  var count = 0;
+  var totalTime = 0;
+  for (var i = 0 ; i < data.length ; i++) {
+    
+    if (data[i].lap1Time > 0) {
+      totalTime = totalTime + data[i].lap1Time;
+      count = count + 1;
+    }
+    if (data[i].lap2Time > 0) {
+      totalTime = totalTime + data[i].lap2Time;
+      count = count + 1;
+    }
+    if (data[i].lap3Time > 0) {
+      totalTime = totalTime + data[i].lap3Time;
+      count = count + 1;
+    }
+    if (data[i].lap4Time > 0) {
+      totalTime = totalTime + data[i].lap4Time;
+      count = count + 1;
+    }
+  }
+  return totalTime/count;
+}

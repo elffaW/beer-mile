@@ -22,8 +22,8 @@ export function percentifyData (data, xParam, yParam, factor) {
 }
 
 export function mphToTime (mph) {
-  var minutes = Math.floor(60/mph);
-  var seconds = Math.floor(((60/mph) - Math.floor(60/mph))*60);
+  var minutes = Math.floor(15/mph);
+  var seconds = Math.floor(((15/mph) - Math.floor(15/mph))*60);
   
   if (mph === 0) {
     return "";

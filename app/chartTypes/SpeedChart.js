@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel, VictoryLine } from 'victory';
+import { VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel, VictoryLine } from 'victory';
 
 import { cleanData } from './chartData/frontEndData.js';
 import {speedDataforIndividual} from './chartData/lapSpeedData.js';
-import { getMax, percentifyData, mphToTime } from './helpers/helperFunctions';
+import { mphToTime } from './helpers/helperFunctions';
 import { getStyles } from './helpers/chartStyles';
 
 const styles = getStyles();
@@ -37,13 +37,12 @@ export default class SpeedChart extends React.Component {
   }
 
   render() {
-    const maxSpeed = getMax(this.state.lapSpeedData, "speed",5);
     
     return (
       
       <svg viewBox="0 0 400 400" >
         
-          <rect x="0" y="0" width="400" height="400" fill="#232325"/>
+          <rect x="0" y="0" width="400" height="400" style={styles.background}/>
       
         <VictoryChart
           theme={VictoryTheme.material}
@@ -58,6 +57,7 @@ export default class SpeedChart extends React.Component {
         
           {/* X-Axis */}
           <VictoryAxis
+            style={styles.barStyleA}
             tickValues={[1, 2, 3, 4]}
             tickFormat={["Lap 1", "Lap 2", "Lap 3", "Lap 4"]}
             tickLabelComponent={
@@ -70,35 +70,37 @@ export default class SpeedChart extends React.Component {
           />
 
           {/* Y-Axis [LAP RUN SPEED] */}
+          <VictoryAxis 
+              dependentAxis
+              orientation="left"
+              standalone={false}
+              tickFormat={(x) => (`${Math.ceil(x/.5)*.5} mph`)}
+              style={styles.barStyleA}
+              tickLabelComponent={
+                <VictoryLabel 
+                style={styles.title}
+                />  
+              } 
+            />
+            
           <VictoryLine
               data={this.state.lapSpeedData}
               x="lap"
               y="speed"
               interpolation="catmullRom"
               labels={(d) => mphToTime(d.y)}
-              style={{ 
-                data: { stroke: "#f1da33", strokeWidth: 3, strokeLinecap: "round" }, 
-                labels: { 
-                          fill: "#F6E77D",
-                          angle: 315}
-              }}
+              style={styles.speedLine}
               animate={{
                 duration: 2000,
                 onLoad: { duration: 2000 }
               }}
           />
-          <VictoryAxis 
-              dependentAxis
-              orientation="left"
-              standalone={false}
-              tickFormat={(x) => (`${Math.ceil(x * maxSpeed/.5)*.5} mph`)}
-              style={{ tickLabels: { fill: "#f1da33" } }}
-            />
+          
           
             
         </VictoryChart>
       </svg>
-    )
+    );
   }
   
   

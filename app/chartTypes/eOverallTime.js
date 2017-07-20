@@ -42,7 +42,7 @@ export default class eOverallChart extends React.Component {
         
         <svg viewBox="0 0 400 400" >
         
-          <rect x="0" y="0" width="400" height="400" fill="#232325"/>
+          <rect x="0" y="0" width="400" height="400" style={styles.background}/>
         
           <VictoryChart 
           domainPadding={{ y: 20, x:20}} 
@@ -51,17 +51,21 @@ export default class eOverallChart extends React.Component {
             
             <VictoryAxis
               dependentAxis
-              tickLabelComponent={<VictoryLabel events={{
-                onClick: (e) => {
-                  this.props.changeRunner(e.target.innerHTML);
-                  
-                }
-              }} />}
-              style={{ tickLabels: { fill: "tomato" , fontSize:8 } }}
+              style={styles.barStyleA}
+              tickLabelComponent={
+                <VictoryLabel events={
+                  {
+                    onClick: (e) => {
+                      this.props.changeRunner(e.target.innerHTML);
+                    }
+                  }
+                }/>
+              }
             />
               
             <VictoryAxis
               label={"Total Time (mins)"}
+              style={styles.barStyleA}
               axisLabelComponent={
                 <VictoryLabel 
                   style={styles.title}

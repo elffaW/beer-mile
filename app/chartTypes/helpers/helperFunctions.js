@@ -58,6 +58,7 @@ export function SecondsToTime (sec) {
 export function groupLapAvg (data) {
   var count = 0;
   var totalTime = 0;
+  if(data === undefined) { return 0; }
   for (var i = 0 ; i < data.length ; i++) {
     
     if (data[i].lap1Time > 0) {

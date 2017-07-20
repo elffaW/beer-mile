@@ -135,9 +135,6 @@ export class RunnerStatus extends Component {
 		if(this.props.runners !== undefined) {
 			let runners = this.props.runners;
 			runners.sort(function(a, b) {
-				if(b.timelog.length === a.timelog.length) {
-					return b.timelog[b.timelog.length-1] - a.timelog[a.timelog.length-1];
-				}
 				return b.timelog.length - a.timelog.length;
 			});
 			runners.forEach(runner => {

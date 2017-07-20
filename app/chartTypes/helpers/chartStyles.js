@@ -15,9 +15,7 @@ export function getStyles() {
       
       barStyleA: {
         data: { 
-          fill: barFillColor, 
-          stroke: "black", 
-          strokeWidth: .5
+          fill: barFillColor
         },
         
         labels: { 

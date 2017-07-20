@@ -4,7 +4,7 @@ import { VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel, VictoryLine } fr
 
 import { cleanData } from './chartData/frontEndData.js';
 import {speedDataforIndividual} from './chartData/lapSpeedData.js';
-import { mphToTime } from './helpers/helperFunctions';
+import { mphToTime, groupLapAvg } from './helpers/helperFunctions';
 import { getStyles } from './helpers/chartStyles';
 
 const styles = getStyles();
@@ -37,6 +37,8 @@ export default class SpeedChart extends React.Component {
   }
 
   render() {
+    
+    const lapAvg = 900/groupLapAvg(this.state.frontEndData);
     
     return (
       
@@ -82,6 +84,18 @@ export default class SpeedChart extends React.Component {
                 />  
               } 
             />
+          
+          {/* Horizontal Line [GROUP AVG LAP TIME] */}  
+          <VictoryLine
+            data={[
+              {x: 0.5, y: lapAvg},
+              {x: 4.5, y: lapAvg}
+            ]}
+            labels={["","GROUP LAP AVG = " + mphToTime(lapAvg)]}
+            standalone={false}
+            labelComponent={<VictoryLabel  dx={-50}/>}
+            style={styles.avgLine}
+          />
             
           <VictoryLine
               data={this.state.lapSpeedData}
